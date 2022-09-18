@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Hellang.Middleware.ProblemDetails;
+using Microsoft.OpenApi.Models;
+using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.API.Models;
 
@@ -15,11 +17,6 @@ namespace SimpleAuthorization.API
         /// Настройки подключения к базе данных
         /// </summary>
         private readonly DbOptions _dbOptions;
-
-        /// <summary>
-        /// Настройки свагера
-        /// </summary>
-        //private readonly SwaggerOprions _swaggerOptions;
 
         /// <summary>
         /// Создает новый экземпляр <see cref="Startup"/>
@@ -58,6 +55,11 @@ namespace SimpleAuthorization.API
 
             services.AddControllers();
 
+            services.AddProblemDetails(options =>
+            {
+                options.Map<NotImplementedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status501NotImplemented));
+            });
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -86,9 +88,11 @@ namespace SimpleAuthorization.API
                 app.UseSwaggerUI();
             }
 
-; app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseProblemDetails();
 
             app.UseEndpoints(endpoints =>
             {

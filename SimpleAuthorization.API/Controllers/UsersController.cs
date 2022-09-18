@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Services.Interfaces;
 
@@ -19,11 +18,7 @@ namespace SimpleAuthorization.API.Controllers
         [HttpPost("create")]
         public async Task<UserDto> CreateNew([FromBody] CreateUserDto request)
         {
-            return await Task.Run(() => new UserDto
-            {
-                Id = 1,
-                Login = request.Login
-            });
+            return await _usersService.CreateNewAsync(request);
         }
     }
 }

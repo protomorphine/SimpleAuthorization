@@ -5,7 +5,7 @@ namespace SimpleAuthorization.Core.Services.Interfaces;
 
 public interface IUsersService
 {
-    Task<User> CreateNewAsync(CreateUserDto dto);
+    Task<UserDto> CreateNewAsync(CreateUserDto dto);
 
 
 }

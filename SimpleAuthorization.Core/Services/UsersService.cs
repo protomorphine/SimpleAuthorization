@@ -11,7 +11,7 @@ public class UsersService : IUsersService
 
     }
 
-    public Task<User> CreateNewAsync(CreateUserDto dto)
+    public Task<UserDto> CreateNewAsync(CreateUserDto dto)
     {
         throw new NotImplementedException();
     }

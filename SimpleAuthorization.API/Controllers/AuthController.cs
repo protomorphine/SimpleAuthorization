@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.API.Models;
+using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.Core.Managers.Interfaces;
 
 namespace SimpleAuthorization.API.Controllers
 {
@@ -9,15 +11,30 @@ namespace SimpleAuthorization.API.Controllers
     {
         private readonly AppSettings _appSettings;
 
-        public AuthController(AppSettings appSettings)
+        private readonly IAuthManager _authManager;
+
+        public AuthController(AppSettings appSettings, IAuthManager authManager)
         {
             _appSettings = appSettings;
+            _authManager = authManager;
         }
 
-        [HttpGet("get")]
-        public Task<string> GetTest()
+        [HttpPost("sign-in")]
+        public Task SignInAsync([FromBody] SignInDto dto)
         {
-            return Task.Run(() => _appSettings.DbOptions.ConnectionString);
+            return _authManager.SignInAsync(dto.Login, dto.Password);
+        }
+
+        [HttpPost("sing-out")]
+        public Task SignOutAsync()
+        {
+            return _authManager.SignOutAsync();
+        }
+
+        [HttpGet("info")]
+        public Task<UserDto> GetCurrentUserInfo()
+        {
+            return _authManager.GetCurrentUserInfoAsync();
         }
     }
 }
