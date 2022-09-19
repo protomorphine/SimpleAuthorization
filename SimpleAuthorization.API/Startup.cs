@@ -1,8 +1,12 @@
 ﻿using Hellang.Middleware.ProblemDetails;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.API.Models;
+using SimpleAuthorization.Core.Repositories;
+using SimpleAuthorization.Infrastructure.Data;
+using SimpleAuthorization.Infrastructure.Repositories;
 
 namespace SimpleAuthorization.API
 {
@@ -70,9 +74,16 @@ namespace SimpleAuthorization.API
                 });
             });
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlite(_dbOptions.ConnectionString);
+            });
+
             services.AddMemoryCache();
 
             services.RegisterServices();
+
+            services.AddTransient<IUserRepository, UserRepository>();
         }
 
         /// <summary>

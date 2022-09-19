@@ -18,17 +18,12 @@ public class AuthManager : IAuthManager
         throw new NotImplementedException();
     }
 
-    public Task<string> SignInAsync(string username, string password)
+    public Task SignInAsync(string username, string password)
     {
         throw new NotImplementedException();
     }
 
     public Task SignOutAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    Task IAuthManager.SignInAsync(string username, string password)
     {
         throw new NotImplementedException();
     }
