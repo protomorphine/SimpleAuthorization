@@ -1,12 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Infrastructure.Data.Config;
 
 namespace SimpleAuthorization.Infrastructure.Data;
 
+/// <summary>
+/// Контекст базы данных приложения
+/// </summary>
 public class ApplicationDbContext : DbContext
 {
+    /// <summary>
+    /// Строка подключения к базе данных
+    /// </summary>
     private readonly string _connectionString;
 
+    /// <summary>
+    /// Коллекция сущностей - пользователь
+    /// </summary>
     public DbSet<User> Users { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -20,6 +30,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().ToTable("users");
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(UsersConfigurations).Assembly);
     }
 }

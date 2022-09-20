@@ -1,8 +1,17 @@
 ﻿namespace SimpleAuthorization.Core.Dtos;
 
+/// <summary>
+/// Дто авторизации
+/// </summary>
 public class SignInDto
 {
-    public string Login { get; set; }
+    /// <summary>
+    /// Логин пользователя
+    /// </summary>
+    public string? Login { get; set; }
 
-    public string Password { get; set; }
+    /// <summary>
+    /// Пароль пользователя
+    /// </summary>
+    public string? Password { get; set; }
 }

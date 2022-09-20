@@ -20,4 +20,10 @@ public class UsersController : ControllerBase
     {
         return await _usersService.CreateNewAsync(request);
     }
+
+    [HttpGet("{id}")]
+    public async Task<UserDto> GetById(long id)
+    {
+        return await _usersService.GetByIdAsync(id);
+    }
 }

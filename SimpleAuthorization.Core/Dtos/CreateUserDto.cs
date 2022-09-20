@@ -1,10 +1,22 @@
 ﻿namespace SimpleAuthorization.Core.Dtos;
 
+/// <summary>
+/// Дто создания нового пользователя
+/// </summary>
 public class CreateUserDto
 {
-    public string Login { get; set; }
+    /// <summary>
+    /// Логин пользователя
+    /// </summary>
+    public string? Login { get; set; }
 
-    public string Password { get; set; }
+    /// <summary>
+    /// Пароль пользователя
+    /// </summary>
+    public string? Password { get; set; }
 
-    public string Fio { get; set; }
+    /// <summary>
+    /// Фио пользоваетля
+    /// </summary>
+    public string? Fio { get; set; }
 }
