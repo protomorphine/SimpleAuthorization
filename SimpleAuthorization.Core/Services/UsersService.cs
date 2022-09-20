@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Core.Services.Interfaces;
 
@@ -14,7 +15,7 @@ public class UsersService : IUsersService
     /// Репозиторий для работы с пользователями
     /// </summary>
     private readonly IUserRepository _usersRepository;
-    
+
     /// <summary>
     /// Создает новый экземпляр <see cref="UsersService"/>
     /// </summary>
@@ -35,7 +36,7 @@ public class UsersService : IUsersService
         {
             Fio = dto.Fio,
             Login = dto.Login,
-            PasswordHash = dto.Password
+            PasswordHash = dto.Password!.ComputeSHA256Hash()
         });
 
         return created;

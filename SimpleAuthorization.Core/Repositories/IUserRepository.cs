@@ -22,6 +22,8 @@ public interface IUserRepository
     /// <returns><see cref="UserDto"/></returns>
     Task<UserDto> GetByIdAsync(long id);
 
+    Task<User> GetByLoginAsync(string login);
+
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>

@@ -53,6 +53,11 @@ public class UserRepository : IUserRepository
         return (await _users.FirstOrDefaultAsync(it => it.Id == id))!.ToUserDto();
     }
 
+    public async Task<User> GetByLoginAsync(string login)
+    {
+        return await _users.FirstOrDefaultAsync(it => it.Login == login);
+    }
+
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>

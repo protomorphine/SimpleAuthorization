@@ -20,9 +20,9 @@ namespace SimpleAuthorization.API.Controllers
         }
 
         [HttpPost("sign-in")]
-        public Task SignInAsync([FromBody] SignInDto dto)
+        public Task<string> SignInAsync([FromBody] SignInDto dto)
         {
-            return _authManager.SignInAsync(dto.Login, dto.Password);
+            return _authManager.SignInAsync(dto.Login!, dto.Password!);
         }
 
         [HttpPost("sing-out")]
@@ -32,9 +32,9 @@ namespace SimpleAuthorization.API.Controllers
         }
 
         [HttpGet("info")]
-        public Task<UserDto> GetCurrentUserInfo()
+        public async Task<UserDto> GetCurrentUserInfo(string token)
         {
-            return _authManager.GetCurrentUserInfoAsync();
+            return await _authManager.GetCurrentUserInfoAsync(token);
         }
     }
 }

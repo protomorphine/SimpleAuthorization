@@ -62,6 +62,7 @@ namespace SimpleAuthorization.API
             services.AddProblemDetails(options =>
             {
                 options.Map<NotImplementedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status501NotImplemented));
+                options.Map<UnauthorizedAccessException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
             });
 
             services.AddSwaggerGen(options =>

@@ -12,7 +12,7 @@ public interface IAuthManager
     /// </summary>
     /// <param name="username">логин</param>
     /// <param name="password">пароль</param>
-    Task SignInAsync(string username, string password);
+    Task<string> SignInAsync(string username, string password);
 
     /// <summary>
     /// Деавторизация пользователя
@@ -23,5 +23,5 @@ public interface IAuthManager
     /// Получение информации о текущем пользователе
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> GetCurrentUserInfoAsync();
+    Task<UserDto> GetCurrentUserInfoAsync(string token);
 }
