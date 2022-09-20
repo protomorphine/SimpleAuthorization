@@ -63,8 +63,8 @@ public class AuthManager : IAuthManager
     /// <summary>
     /// Деавторизация пользователя
     /// </summary>
-    public Task SignOutAsync()
+    public async Task SignOutAsync(string token)
     {
-        throw new NotImplementedException();
+        await Task.Run(() => _cache.Remove(token));
     }
 }

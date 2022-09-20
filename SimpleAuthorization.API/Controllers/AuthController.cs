@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.API.Models;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Managers.Interfaces;
@@ -20,20 +21,26 @@ namespace SimpleAuthorization.API.Controllers
         }
 
         [HttpPost("sign-in")]
-        public Task<string> SignInAsync([FromBody] SignInDto dto)
+        public async Task<string> SignInAsync([FromBody] SignInDto dto)
         {
-            return _authManager.SignInAsync(dto.Login!, dto.Password!);
+            var token = await _authManager.SignInAsync(dto.Login!, dto.Password!);
+            Response.Cookies.Append("auth", token, new CookieOptions() { HttpOnly = true});
+            return token;
         }
 
         [HttpPost("sing-out")]
-        public Task SignOutAsync()
+        public async void SignOutAsync()
         {
-            return _authManager.SignOutAsync();
+            var token = Request.Cookies.FirstOrDefault(c => c.Key == "auth").Value;
+            await _authManager.SignOutAsync(token);
+            //Response.Cookies.Delete("auth");
+
         }
 
         [HttpGet("info")]
-        public async Task<UserDto> GetCurrentUserInfo(string token)
+        public async Task<UserDto> GetCurrentUserInfo()
         {
+            var token = Request.Cookies["auth"];
             return await _authManager.GetCurrentUserInfoAsync(token);
         }
     }

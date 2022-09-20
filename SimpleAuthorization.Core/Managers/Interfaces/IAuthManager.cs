@@ -17,7 +17,7 @@ public interface IAuthManager
     /// <summary>
     /// Деавторизация пользователя
     /// </summary>
-    Task SignOutAsync();
+    Task SignOutAsync(string token);
 
     /// <summary>
     /// Получение информации о текущем пользователе
