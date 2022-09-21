@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Core.Services.Interfaces;
@@ -32,6 +33,10 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> CreateNewAsync(CreateUserDto dto)
     {
+
+        if (_usersRepository.GetByLoginAsync(dto.Login) != null)
+            throw new UserAlreadyExistException($"Пользователь с логином {dto.Login} уже есть в системе.");
+
         var created = await _usersRepository.CreateAsync(new User()
         {
             Fio = dto.Fio,
@@ -49,6 +54,9 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> GetByIdAsync(long id)
     {
-        return await _usersRepository.GetByIdAsync(id);
+        var user = await _usersRepository.GetByIdAsync(id);
+        user.ThrowIfNotFound($"Пользователь с id={id} не найден.");
+
+        return user!;
     }
 }

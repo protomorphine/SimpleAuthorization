@@ -37,6 +37,7 @@ public class AuthManager : IAuthManager
         var userId = (long)_cache.Get(token);
 
         var user = await _userRepository.GetByIdAsync(userId);
+        user.ThrowIfNotFound("Неизвестный пользователь.");
 
         return user;
     }
@@ -50,6 +51,8 @@ public class AuthManager : IAuthManager
     {
         var hashedPassword = password.ComputeSHA256Hash();
         var user = await _userRepository.GetByLoginAsync(username);
+
+        user.ThrowIfNotFound($"Пользователь {username} не найден.");
 
         if (hashedPassword != user.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
         

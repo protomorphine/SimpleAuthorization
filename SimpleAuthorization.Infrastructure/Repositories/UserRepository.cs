@@ -48,12 +48,12 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> GetByIdAsync(long id)
+    public async Task<UserDto?> GetByIdAsync(long id)
     {
-        return (await _users.FirstOrDefaultAsync(it => it.Id == id))!.ToUserDto();
+        return (await _users.FirstOrDefaultAsync(it => it.Id == id))?.ToUserDto();
     }
 
-    public async Task<User> GetByLoginAsync(string login)
+    public async Task<User?> GetByLoginAsync(string login)
     {
         return await _users.FirstOrDefaultAsync(it => it.Login == login);
     }

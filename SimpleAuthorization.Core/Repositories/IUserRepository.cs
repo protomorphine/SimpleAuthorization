@@ -20,9 +20,14 @@ public interface IUserRepository
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> GetByIdAsync(long id);
+    Task<UserDto?> GetByIdAsync(long id);
 
-    Task<User> GetByLoginAsync(string login);
+    /// <summary>
+    /// Получение пользователя по логину
+    /// </summary>
+    /// <param name="login">логин пользователя</param>
+    /// <returns><see cref="User"/></returns>
+    Task<User?> GetByLoginAsync(string login);
 
     /// <summary>
     /// Получение списка всех пользователей

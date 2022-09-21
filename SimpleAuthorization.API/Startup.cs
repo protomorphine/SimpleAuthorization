@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.API.Models;
+using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Infrastructure.Data;
 using SimpleAuthorization.Infrastructure.Repositories;
@@ -63,6 +64,8 @@ namespace SimpleAuthorization.API
             {
                 options.Map<NotImplementedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status501NotImplemented));
                 options.Map<UnauthorizedAccessException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
+                options.Map<ObjectNotFoundException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status404NotFound));
+                options.Map<UserAlreadyExistException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status400BadRequest));
             });
 
             services.AddSwaggerGen(options =>
