@@ -21,11 +21,11 @@ namespace SimpleAuthorization.API.Controllers
         }
 
         [HttpPost("sign-in")]
-        public async Task<string> SignInAsync([FromBody] SignInDto dto)
+        public async Task<IActionResult> SignInAsync([FromBody] SignInDto dto)
         {
             var token = await _authManager.SignInAsync(dto.Login!, dto.Password!);
-            Response.Cookies.Append("auth", token, new CookieOptions() { HttpOnly = true});
-            return token;
+            Response.Cookies.Append("auth", token, new CookieOptions() { HttpOnly = true, Expires = DateTime.Now.AddHours(1)});
+            return Ok();
         }
 
         [HttpPost("sing-out")]
