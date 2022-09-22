@@ -39,6 +39,7 @@ public class AuthManager : IAuthManager
     public async Task<UserDto> GetCurrentUserInfoAsync(string token)
     {
         var userId = (long)_cache.Get(token);
+        userId.ThrowIfNotFound("Пользователь не найден!");
         var user = await _userRepository.GetByIdAsync(userId);
         user.ThrowIfNotFound("Неизвестный пользователь.");
 

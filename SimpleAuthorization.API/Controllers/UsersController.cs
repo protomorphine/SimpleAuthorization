@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SimpleAuthorization.API.Attributes;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Services.Interfaces;
 
@@ -42,6 +43,7 @@ public class UsersController : ControllerBase
     /// <param name="id">id пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
     [HttpGet("{id}")]
+    [AuthReqired]
     public async Task<UserDto> GetById(long id)
     {
         return await _usersService.GetByIdAsync(id);
