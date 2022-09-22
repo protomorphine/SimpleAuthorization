@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using SimpleAuthorization.Core.Dtos;
+﻿using SimpleAuthorization.Core.Dtos;
+using Microsoft.Extensions.Caching.Memory;
 using SimpleAuthorization.Core.Extensions;
-using SimpleAuthorization.Core.Managers.Interfaces;
 using SimpleAuthorization.Core.Repositories;
+using SimpleAuthorization.Core.Managers.Interfaces;
 
 namespace SimpleAuthorization.Core.Managers;
 
@@ -36,12 +36,13 @@ public class AuthManager : IAuthManager
     /// Получение информации о текущем пользователе
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> GetCurrentUserInfoAsync(string token)
+    public async Task<UserDto> GetUserByTokenAsync(string token)
     {
-        long userId = 0;
-        _cache.TryGetValue(token, out userId);
+        _cache.TryGetValue(token, out long userId);
         var user = await _userRepository.GetByIdAsync(userId);
-        user.ThrowIfNotFound("Неизвестный пользователь.");
+
+        if (user == null)
+            throw new UnauthorizedAccessException("Unauthorized");
 
         return user!;
         
@@ -50,8 +51,7 @@ public class AuthManager : IAuthManager
     /// <summary>
     /// Авторизация пользователя по логину и паролю
     /// </summary>
-    /// <param name="username">логин</param>
-    /// <param name="password">пароль</param>
+    /// <param name="dto"><see cref="SignInDto"/></param>
     public async Task<string> SignInAsync(SignInDto dto)
     {
         var hashedPassword = dto.Password!.ComputeSha256Hash();

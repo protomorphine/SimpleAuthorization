@@ -8,7 +8,6 @@ namespace SimpleAuthorization.API.Attributes
     {
         public AuthReqiredAttribute()
         {
-            Console.WriteLine("attr created");
         }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -21,12 +20,24 @@ namespace SimpleAuthorization.API.Attributes
 
             try
             {
-                var user = service.GetCurrentUserInfoAsync(token).Result;
+                var userId = service.GetUserByTokenAsync(token).Result.Id;
+
             }
-            catch (AggregateException ex) when (ex.InnerException.GetType() == typeof(ObjectNotFoundException))
+            catch
+            {
+                return;
+            }
+
+
+            /*
+            try
+            {
+                var _ = service!.GetUserByTokenAsync(token).Result;
+            }
+            catch (AggregateException ex) when (ex.InnerException?.GetType() == typeof(UnauthorizedAccessException))
             {
                 throw new UnauthorizedAccessException("Unauthorized.");
-            }
+            }*/
         }
     }
 }
