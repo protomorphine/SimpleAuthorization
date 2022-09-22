@@ -16,12 +16,16 @@ public class AuthManager : IAuthManager
     /// </summary>
     private readonly IMemoryCache _cache;
 
+    /// <summary>
+    /// Репозиторий для работы с пользователями
+    /// </summary>
     private readonly IUserRepository _userRepository;
 
     /// <summary>
     /// Созздает новый экземпляр <see cref="AuthManager"/>
     /// </summary>
-    /// <param name="cache"></param>
+    /// <param name="cache">Кэш для хранения токенов</param>
+    /// <param name="userRepository">Репозиторий для работы с пользователями</param>
     public AuthManager(IMemoryCache cache, IUserRepository userRepository)
     {
         _cache = cache;
@@ -35,11 +39,10 @@ public class AuthManager : IAuthManager
     public async Task<UserDto> GetCurrentUserInfoAsync(string token)
     {
         var userId = (long)_cache.Get(token);
-
         var user = await _userRepository.GetByIdAsync(userId);
         user.ThrowIfNotFound("Неизвестный пользователь.");
 
-        return user;
+        return user!;
     }
 
     /// <summary>
@@ -47,17 +50,17 @@ public class AuthManager : IAuthManager
     /// </summary>
     /// <param name="username">логин</param>
     /// <param name="password">пароль</param>
-    public async Task<string> SignInAsync(string username, string password)
+    public async Task<string> SignInAsync(SignInDto dto)
     {
-        var hashedPassword = password.ComputeSHA256Hash();
-        var user = await _userRepository.GetByLoginAsync(username);
+        var hashedPassword = dto.Password!.ComputeSha256Hash();
+        var user = await _userRepository.GetByLoginAsync(dto.Login!);
 
-        user.ThrowIfNotFound($"Пользователь {username} не найден.");
+        user.ThrowIfNotFound($"Пользователь {dto.Login!} не найден.");
 
         if (hashedPassword != user.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
         
         var userToken = Guid.NewGuid().ToString();
-        _cache.Set(userToken, user.Id, DateTime.Now.AddHours(1));
+        _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));
 
         return userToken;
 

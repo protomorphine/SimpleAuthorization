@@ -1,47 +1,61 @@
-﻿using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.Mvc;
-using SimpleAuthorization.API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Managers.Interfaces;
 
-namespace SimpleAuthorization.API.Controllers
+namespace SimpleAuthorization.API.Controllers;
+
+/// <summary>
+/// Контроллер управления досутпом
+/// </summary>
+[ApiController]
+[Route("api/auth")]
+public class AuthController : ControllerBase
 {
-    [Route("api/auth")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    /// <summary>
+    /// Менеджер авторизации
+    /// </summary>
+    private readonly IAuthManager _authManager;
+
+    /// <summary>
+    /// Создает новый экземпляр <see cref="AuthController"/>
+    /// </summary>
+    /// <param name="authManager">Менеджер авторизации</param>
+    public AuthController(IAuthManager authManager)
     {
-        private readonly AppSettings _appSettings;
+        _authManager = authManager;
+    }
 
-        private readonly IAuthManager _authManager;
+    /// <summary>
+    /// Авторизует пользователя
+    /// </summary>
+    /// <param name="dto">Дто авторизации</param>
+    /// <returns></returns>
+    [HttpPost("sign-in")]
+    public async Task<IActionResult> SignInAsync([FromBody] SignInDto request)
+    {
+        var token = await _authManager.SignInAsync(request);
+        Response.Cookies.Append("auth", token, new CookieOptions() { HttpOnly = true, Expires = DateTime.Now.AddHours(1) });
+        return Ok();
+    }
 
-        public AuthController(AppSettings appSettings, IAuthManager authManager)
-        {
-            _appSettings = appSettings;
-            _authManager = authManager;
-        }
+    /// <summary>
+    /// Разлогинивает пользователя
+    /// </summary>
+    [HttpPost("sing-out")]
+    public async void SignOutAsync()
+    {
+        var token = Request.Cookies.FirstOrDefault(c => c.Key == "auth").Value;
+        await _authManager.SignOutAsync(token);
+    }
 
-        [HttpPost("sign-in")]
-        public async Task<IActionResult> SignInAsync([FromBody] SignInDto dto)
-        {
-            var token = await _authManager.SignInAsync(dto.Login!, dto.Password!);
-            Response.Cookies.Append("auth", token, new CookieOptions() { HttpOnly = true, Expires = DateTime.Now.AddHours(1)});
-            return Ok();
-        }
-
-        [HttpPost("sing-out")]
-        public async void SignOutAsync()
-        {
-            var token = Request.Cookies.FirstOrDefault(c => c.Key == "auth").Value;
-            await _authManager.SignOutAsync(token);
-            //Response.Cookies.Delete("auth");
-
-        }
-
-        [HttpGet("info")]
-        public async Task<UserDto> GetCurrentUserInfo()
-        {
-            var token = Request.Cookies["auth"];
-            return await _authManager.GetCurrentUserInfoAsync(token);
-        }
+    /// <summary>
+    /// Получение информации о текущем пользователе
+    /// </summary>
+    /// <returns><see cref="UserDto"/></returns>
+    [HttpGet("info")]
+    public async Task<UserDto> GetCurrentUserInfo()
+    {
+        var token = Request.Cookies["auth"];
+        return await _authManager.GetCurrentUserInfoAsync(token);
     }
 }

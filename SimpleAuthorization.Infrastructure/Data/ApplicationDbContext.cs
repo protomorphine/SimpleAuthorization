@@ -20,10 +20,18 @@ public class ApplicationDbContext : DbContext
     /// </summary>
     public DbSet<User> Users { get; set; }
 
+    /// <summary>
+    /// Создает новый экземпляр <see cref="ApplicationDbContext"/>
+    /// </summary>
+    /// <param name="options"><see cref="DbContextOptions"/></param>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 
+    /// <summary>
+    /// Создает новый экземпляр <see cref="ApplicationDbContext"/>
+    /// </summary>
+    /// <param name="connectionString">Строка подключения к базе данных</param>
     public ApplicationDbContext(string connectionString)
     {
         _connectionString = connectionString;

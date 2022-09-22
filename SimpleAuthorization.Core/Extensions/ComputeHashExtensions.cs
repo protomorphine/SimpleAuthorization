@@ -3,9 +3,12 @@ using System.Security.Cryptography;
 
 namespace SimpleAuthorization.Core.Extensions;
 
+/// <summary>
+/// Метод расшиерния для вычисления SHA265 хэша строки
+/// </summary>
 internal static class ComputeHashExtensions
 {
-    public static string ComputeSHA256Hash(this string st)
+    public static string ComputeSha256Hash(this string st)
     {
         using var sha = new SHA256Managed();
 

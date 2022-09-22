@@ -41,7 +41,7 @@ public class UsersService : IUsersService
         {
             Fio = dto.Fio,
             Login = dto.Login,
-            PasswordHash = dto.Password!.ComputeSHA256Hash()
+            PasswordHash = dto.Password!.ComputeSha256Hash()
         });
 
         return created;

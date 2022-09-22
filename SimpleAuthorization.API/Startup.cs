@@ -5,9 +5,7 @@ using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.API.Models;
 using SimpleAuthorization.Core.Exceptions;
-using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Infrastructure.Data;
-using SimpleAuthorization.Infrastructure.Repositories;
 
 namespace SimpleAuthorization.API
 {
@@ -34,7 +32,7 @@ namespace SimpleAuthorization.API
             WebHostEnvironment = env;
 
             _appSettings = config.GetSection("AppSettings").Get<AppSettings>();
-            _dbOptions = _appSettings.DbOptions;
+            _dbOptions = _appSettings.DbOptions!;
         }
 
         /// <summary>
@@ -87,7 +85,7 @@ namespace SimpleAuthorization.API
 
             services.RegisterServices();
 
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.RegisterRepositories();
         }
 
         /// <summary>
