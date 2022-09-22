@@ -23,5 +23,5 @@ public interface IAuthManager
     /// Получение информации о текущем пользователе
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> GetCurrentUserInfoAsync(string token);
+    Task<UserDto> GetUserByTokenAsync(string token);
 }
