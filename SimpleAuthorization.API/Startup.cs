@@ -6,6 +6,7 @@ using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Infrastructure.Data;
+using ProblemDetailsExtensions = SimpleAuthorization.API.Extensions.ProblemDetailsExtensions;
 
 namespace SimpleAuthorization.API;
 
@@ -58,12 +59,7 @@ public class Startup
 
         services.AddControllers();
 
-        services.AddProblemDetails(options =>
-        {
-            options.Map<UnauthorizedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
-            options.Map<ObjectNotFoundException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status404NotFound));
-            options.Map<UserAlreadyExistException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status400BadRequest));
-        });
+        services.AddProblemDetails(ProblemDetailsExtensions.ConfigureProblemDetails);
 
         services.AddSwaggerGen(options =>
         {
