@@ -33,7 +33,8 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> CreateNewAsync(CreateUserDto dto)
     {
-        if (_usersRepository.GetByLoginAsync(dto.Login) != null)
+        var user = await _usersRepository.GetByLoginAsync(dto.Login);
+        if (user != null)
             throw new UserAlreadyExistException($"Пользователь с логином {dto.Login} уже есть в системе.");
 
         var created = await _usersRepository.CreateAsync(new User()
