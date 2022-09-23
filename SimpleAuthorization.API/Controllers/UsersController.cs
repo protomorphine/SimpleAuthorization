@@ -31,6 +31,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="request"><see cref="CreateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
+    [AuthReqired]
     [HttpPost("create")]
     public async Task<UserDto> CreateNew([FromBody] CreateUserDto request)
     {
@@ -42,6 +43,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="id">id пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
+    [AuthReqired]
     [HttpGet("{id}")]
     public async Task<UserDto> GetById(long id)
     {

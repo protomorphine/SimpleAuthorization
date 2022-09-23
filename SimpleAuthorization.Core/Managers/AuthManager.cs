@@ -33,14 +33,18 @@ public class AuthManager : IAuthManager
     }
 
     /// <summary>
-    /// Получение информации о пользователе по токену
+    /// Получение информации о текущем пользователе
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto?> GetUserByTokenAsync(string token)
+    public async Task<UserDto> GetUserByTokenAsync(string token)
     {
         _cache.TryGetValue(token, out long userId);
+        var user = await _userRepository.GetByIdAsync(userId);
 
-        return await _userRepository.GetByIdAsync(userId);
+        if (user == null)
+            throw new UnauthorizedAccessException("Unauthorized");
+
+        return user!;
         
     }
 
@@ -55,7 +59,7 @@ public class AuthManager : IAuthManager
 
         user.ThrowIfNotFound($"Пользователь {dto.Login!} не найден.");
 
-        if (hashedPassword != user!.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
+        if (hashedPassword != user.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
         
         var userToken = Guid.NewGuid().ToString();
         _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));

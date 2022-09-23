@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.API.Attributes;
 using SimpleAuthorization.Core.Managers.Interfaces;
 
 namespace SimpleAuthorization.API.Controllers;
@@ -41,6 +42,7 @@ public class AuthController : ControllerBase
     /// <summary>
     /// Разлогинивает пользователя
     /// </summary>
+    [AuthReqired]
     [HttpPost("sing-out")]
     public async void SignOutAsync()
     {
@@ -52,6 +54,7 @@ public class AuthController : ControllerBase
     /// Получение информации о текущем пользователе
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
+    [AuthReqired]
     [HttpGet("info")]
     public async Task<UserDto> GetCurrentUserInfo()
     {
