@@ -60,8 +60,7 @@ public class Startup
 
         services.AddProblemDetails(options =>
         {
-            options.Map<NotImplementedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status501NotImplemented));
-            options.Map<UnauthorizedAccessException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
+            options.Map<UnauthorizedException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
             options.Map<ObjectNotFoundException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status404NotFound));
             options.Map<UserAlreadyExistException>(ex => new ExtendedExceptionProblemDetails(ex, StatusCodes.Status400BadRequest));
         });
@@ -92,7 +91,7 @@ public class Startup
     /// Конфигурация приложения
     /// </summary>
     /// <param name="app">приложение</param>
-    /// <param name="env"></param>
+    /// <param name="env">окружение</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())

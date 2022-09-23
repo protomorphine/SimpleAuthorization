@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using Microsoft.Extensions.Caching.Memory;
+using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Core.Managers.Interfaces;
@@ -42,7 +43,7 @@ public class AuthManager : IAuthManager
         var user = await _userRepository.GetByIdAsync(userId);
 
         if (user == null)
-            throw new UnauthorizedAccessException("Unauthorized");
+            throw new UnauthorizedException("Unauthorized");
 
         return user!;
         
