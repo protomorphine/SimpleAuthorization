@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     /// <summary>
     /// Авторизует пользователя
     /// </summary>
-    /// <param name="dto">Дто авторизации</param>
+    /// <param name="request">Дто авторизации</param>
     /// <returns></returns>
     [HttpPost("sign-in")]
     public async Task<IActionResult> SignInAsync([FromBody] SignInDto request)
@@ -56,6 +56,6 @@ public class AuthController : ControllerBase
     public async Task<UserDto> GetCurrentUserInfo()
     {
         var token = Request.Cookies["auth"];
-        return await _authManager.GetCurrentUserInfoAsync(token);
+        return await _authManager.GetUserByTokenAsync(token);
     }
 }

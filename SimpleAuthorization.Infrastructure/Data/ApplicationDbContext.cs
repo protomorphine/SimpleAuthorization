@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     /// <summary>
     /// Строка подключения к базе данных
     /// </summary>
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
 
     /// <summary>
     /// Коллекция сущностей - пользователь

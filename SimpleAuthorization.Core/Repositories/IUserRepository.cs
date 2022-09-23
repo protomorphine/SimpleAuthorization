@@ -33,5 +33,5 @@ public interface IUserRepository
     /// Получение списка всех пользователей
     /// </summary>
     /// <returns>список <see cref="User"/></returns>
-    Task<List<User>> GetUsersAsync();
+    Task<List<UserDto>> GetUsersAsync();
 }

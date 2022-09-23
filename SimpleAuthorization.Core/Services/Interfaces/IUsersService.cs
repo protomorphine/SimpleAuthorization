@@ -21,4 +21,10 @@ public interface IUsersService
     /// <returns><see cref="UserDto"/></returns>
     Task<UserDto> GetByIdAsync(long id);
 
+    /// <summary>
+    /// Получение списка всех пользователей
+    /// </summary>
+    /// <returns><see cref="List{UserDto}"/></returns>
+    Task<List<UserDto>> GetAllAsync();
+
 }

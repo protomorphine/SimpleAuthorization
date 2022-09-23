@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using SimpleAuthorization.Core.Dtos;
+﻿using SimpleAuthorization.Core.Dtos;
+using Microsoft.Extensions.Caching.Memory;
 using SimpleAuthorization.Core.Extensions;
-using SimpleAuthorization.Core.Managers.Interfaces;
 using SimpleAuthorization.Core.Repositories;
+using SimpleAuthorization.Core.Managers.Interfaces;
 
 namespace SimpleAuthorization.Core.Managers;
 
@@ -33,23 +33,21 @@ public class AuthManager : IAuthManager
     }
 
     /// <summary>
-    /// Получение информации о текущем пользователе
+    /// Получение информации о пользователе по токену
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> GetCurrentUserInfoAsync(string token)
+    public async Task<UserDto?> GetUserByTokenAsync(string token)
     {
-        var userId = (long)_cache.Get(token);
-        var user = await _userRepository.GetByIdAsync(userId);
-        user.ThrowIfNotFound("Неизвестный пользователь.");
+        _cache.TryGetValue(token, out long userId);
 
-        return user!;
+        return await _userRepository.GetByIdAsync(userId);
+        
     }
 
     /// <summary>
     /// Авторизация пользователя по логину и паролю
     /// </summary>
-    /// <param name="username">логин</param>
-    /// <param name="password">пароль</param>
+    /// <param name="dto"><see cref="SignInDto"/></param>
     public async Task<string> SignInAsync(SignInDto dto)
     {
         var hashedPassword = dto.Password!.ComputeSha256Hash();
@@ -57,7 +55,7 @@ public class AuthManager : IAuthManager
 
         user.ThrowIfNotFound($"Пользователь {dto.Login!} не найден.");
 
-        if (hashedPassword != user.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
+        if (hashedPassword != user!.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
         
         var userToken = Guid.NewGuid().ToString();
         _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));

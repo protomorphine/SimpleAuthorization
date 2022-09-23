@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SimpleAuthorization.API.Attributes;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Services.Interfaces;
 
@@ -45,5 +46,16 @@ public class UsersController : ControllerBase
     public async Task<UserDto> GetById(long id)
     {
         return await _usersService.GetByIdAsync(id);
+    }
+
+    /// <summary>
+    /// Получение списка всех пользователей
+    /// </summary>
+    /// <returns><see cref="List{UserDto}"/></returns>
+    [AuthReqired]
+    [HttpGet("all")]
+    public async Task<List<UserDto>> GetAllUsers()
+    {
+        return await _usersService.GetAllAsync();
     }
 }

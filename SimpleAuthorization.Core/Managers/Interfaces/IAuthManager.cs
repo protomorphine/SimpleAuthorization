@@ -20,8 +20,8 @@ public interface IAuthManager
     Task SignOutAsync(string token);
 
     /// <summary>
-    /// Получение информации о текущем пользователе
+    /// Получение информации о пользователе по токену
     /// </summary>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> GetCurrentUserInfoAsync(string token);
+    Task<UserDto?> GetUserByTokenAsync(string token);
 }

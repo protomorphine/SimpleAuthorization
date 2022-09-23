@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Infrastructure.Data;
 
@@ -53,6 +54,11 @@ public class UserRepository : IUserRepository
         return (await _users.FirstOrDefaultAsync(it => it.Id == id))?.ToUserDto();
     }
 
+    /// <summary>
+    /// Получение информации о пользователе по логину
+    /// </summary>
+    /// <param name="login">логин пользователя</param>
+    /// <returns><see cref="User"/></returns>
     public async Task<User?> GetByLoginAsync(string login)
     {
         return await _users.FirstOrDefaultAsync(it => it.Login == login);
@@ -62,8 +68,8 @@ public class UserRepository : IUserRepository
     /// Получение списка всех пользователей
     /// </summary>
     /// <returns>список <see cref="User"/></returns>
-    public async Task<List<User>> GetUsersAsync()
+    public async Task<List<UserDto>> GetUsersAsync()
     {
-        return await _users.ToListAsync();
+        return (await _users.ToListAsync()).ToUserDtoList();
     }
 }

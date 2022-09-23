@@ -33,7 +33,6 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> CreateNewAsync(CreateUserDto dto)
     {
-
         if (_usersRepository.GetByLoginAsync(dto.Login) != null)
             throw new UserAlreadyExistException($"Пользователь с логином {dto.Login} уже есть в системе.");
 
@@ -55,8 +54,17 @@ public class UsersService : IUsersService
     public async Task<UserDto> GetByIdAsync(long id)
     {
         var user = await _usersRepository.GetByIdAsync(id);
-        user.ThrowIfNotFound($"Пользователь с id={id} не найден.");
+        user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
 
         return user!;
+    }
+
+    /// <summary>
+    /// Получение списка всех пользователей
+    /// </summary>
+    /// <returns><see cref="List{UserDto}"/></returns>
+    public async Task<List<UserDto>> GetAllAsync()
+    {
+        return await _usersRepository.GetUsersAsync();
     }
 }
