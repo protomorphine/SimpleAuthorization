@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+﻿using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
 using SimpleAuthorization.Core.Extensions;
