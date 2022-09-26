@@ -19,6 +19,11 @@ public class ApplicationDbContext : DbContext
     /// Коллекция сущностей - пользователь
     /// </summary>
     public DbSet<User> Users { get; set; }
+    
+    /// <summary>
+    /// Коллекция сущностей - организация
+    /// </summary>
+    public DbSet<Organization> Organizations { get; set; }
 
     /// <summary>
     /// Создает новый экземпляр <see cref="ApplicationDbContext"/>
