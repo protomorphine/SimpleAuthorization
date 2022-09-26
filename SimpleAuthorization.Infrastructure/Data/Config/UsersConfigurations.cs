@@ -13,5 +13,9 @@ internal class UsersConfigurations : IEntityTypeConfiguration<User>
     {
         builder.ToTable("users");
         builder.HasKey(x => x.Id);
+
+        builder.HasOne(user => user.Organization)
+            .WithMany(org => org.Users)
+            .HasForeignKey(user => user.OrganizationId);
     }
 }

@@ -32,6 +32,11 @@ public class User
     /// </summary>
     [Column("fio")]
     public string? Fio { get; set; }
+    
+    [Column("org_id")]
+    public long? OrganizationId { get; set; }
+    
+    public Organization? Organization { get; set; }
 
     /// <summary>
     /// Мапинг сущности на дто
