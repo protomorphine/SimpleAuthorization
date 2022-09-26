@@ -34,8 +34,8 @@ public class OrganizationRepository : IOrganizationRepository
         return entity;
     }
 
-    public Task GetOrganizationByIdAsync(long id)
+    public async Task<Organization> GetOrganizationByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        return await _organizations.FirstOrDefaultAsync(org => org.Id == id);
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace SimpleAuthorization.Core.Services.Interfaces;
+﻿using SimpleAuthorization.Core.Entities;
+
+namespace SimpleAuthorization.Core.Services.Interfaces;
 
 public interface IOrganizationService
 {
-    Task CreateOrganizationAsync();
+    Task<Organization> CreateOrganizationAsync(string name);
 
     Task GetOrganizationByIdAsync(long id);
 

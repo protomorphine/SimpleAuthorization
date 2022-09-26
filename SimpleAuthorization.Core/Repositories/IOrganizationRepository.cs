@@ -6,5 +6,5 @@ public interface IOrganizationRepository
 {
     Task<Organization> CreateOrganizationAsync(Organization entity);
 
-    Task GetOrganizationByIdAsync(long id);
+    Task<Organization> GetOrganizationByIdAsync(long id);
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
 using SimpleAuthorization.Core.Extensions;
@@ -51,7 +53,8 @@ public class UserRepository : IUserRepository
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto?> GetByIdAsync(long id)
     {
-        return (await _users.FirstOrDefaultAsync(it => it.Id == id))?.ToUserDto();
+        var result = await _users.FirstOrDefaultAsync(it => it.Id == id);
+        return result.ToUserDto();
     }
 
     /// <summary>

@@ -54,7 +54,8 @@ public class User
         {
             Fio = Fio!,
             Login = Login!,
-            Id = Id
+            Id = Id,
+            OrganizationName = Organization.Name
         };
     }
 }

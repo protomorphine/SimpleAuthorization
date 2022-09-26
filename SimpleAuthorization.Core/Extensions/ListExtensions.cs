@@ -12,11 +12,6 @@ public static class ListExtensions
     /// <returns>Список дто</returns>
     public static List<UserDto> ToUserDtoList(this IEnumerable<User> users)
     {
-        return users.Select(user => new UserDto()
-        {
-            Id = user.Id,
-            Login = user.Login,
-            Fio = user.Fio
-        }).ToList();
+        return users.Select(user => user.ToUserDto()).ToList();
     }
 }
