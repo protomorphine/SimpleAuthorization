@@ -76,6 +76,8 @@ public class UserRepository : IUserRepository
     /// <returns>список <see cref="User"/></returns>
     public async Task<List<UserDto>> GetUsersAsync()
     {
-        return (await _users.ToListAsync()).ToUserDtoList();
+        return (await _users.Include(it => it.Organization)
+            .ToListAsync())
+            .ToUserDtoList();
     }
 }
