@@ -24,6 +24,8 @@ public class UserRepository : IUserRepository
     /// </summary>
     private readonly DbSet<User> _users;
 
+    private readonly DbSet<Organization> _organizations;
+
     /// <summary>
     /// Создает новый экземпляр <see cref="UserRepository"/>
     /// </summary>
@@ -32,6 +34,7 @@ public class UserRepository : IUserRepository
     {
         _dbContext = dbContext;
         _users = dbContext.Users;
+        _organizations = dbContext.Organizations;
     }
 
     /// <summary>
@@ -53,8 +56,10 @@ public class UserRepository : IUserRepository
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto?> GetByIdAsync(long id)
     {
-        var result = await _users.FirstOrDefaultAsync(it => it.Id == id);
-        return result.ToUserDto();
+        var result = await _users.Include(it => it.Organization)
+            .FirstOrDefaultAsync(it => it.Id == id);
+
+        return result?.ToUserDto();
     }
 
     /// <summary>

@@ -17,10 +17,10 @@ public class Organization
     /// Имя организации
     /// </summary>
     [Column("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Связь сущностей организаця - пользователь
     /// </summary>
-    public List<User> Users { get; set; }
+    public virtual List<User> Users { get; set; }
 }
