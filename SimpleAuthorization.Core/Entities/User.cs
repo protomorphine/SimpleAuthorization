@@ -33,9 +33,15 @@ public class User
     [Column("fio")]
     public string? Fio { get; set; }
     
+    /// <summary>
+    /// ID организации пользователя
+    /// </summary>
     [Column("org_id")]
     public long? OrganizationId { get; set; }
     
+    /// <summary>
+    /// Связь сущностей пользователь - организация
+    /// </summary>
     public Organization? Organization { get; set; }
 
     /// <summary>
