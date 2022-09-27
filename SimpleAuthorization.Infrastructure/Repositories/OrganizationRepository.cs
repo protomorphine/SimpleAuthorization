@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Infrastructure.Data;
@@ -27,15 +28,16 @@ public class OrganizationRepository : IOrganizationRepository
         _organizations = dbContext.Organizations;
     }
 
-    public async Task<Organization> CreateOrganizationAsync(Organization entity)
+    public async Task<OrganizationDto> CreateOrganizationAsync(Organization entity)
     {
         await _organizations.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
-        return entity;
+        return entity.ToOrganizationDto();
     }
 
-    public async Task<Organization> GetOrganizationByIdAsync(long id)
+    public async Task<OrganizationDto> GetOrganizationByIdAsync(long id)
     {
-        return await _organizations.FirstOrDefaultAsync(org => org.Id == id);
+        var org = await _organizations.FirstOrDefaultAsync(org => org.Id == id);
+        return org?.ToOrganizationDto();
     }
 }

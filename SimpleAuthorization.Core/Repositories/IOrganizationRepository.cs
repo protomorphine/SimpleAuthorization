@@ -1,10 +1,11 @@
-﻿using SimpleAuthorization.Core.Entities;
+﻿using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.Core.Entities;
 
 namespace SimpleAuthorization.Core.Repositories;
 
 public interface IOrganizationRepository
 {
-    Task<Organization> CreateOrganizationAsync(Organization entity);
+    Task<OrganizationDto> CreateOrganizationAsync(Organization entity);
 
-    Task<Organization> GetOrganizationByIdAsync(long id);
+    Task<OrganizationDto> GetOrganizationByIdAsync(long id);
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using SimpleAuthorization.Core.Dtos;
 
 namespace SimpleAuthorization.Core.Entities;
 
@@ -23,4 +24,13 @@ public class Organization
     /// Связь сущностей организаця - пользователь
     /// </summary>
     public virtual List<User> Users { get; set; }
+
+    public OrganizationDto ToOrganizationDto()
+    {
+        return new OrganizationDto()
+        {
+            OrganizationId = Id,
+            OrganizationName = Name!
+        };
+    }
 }

@@ -17,9 +17,16 @@ public class OrganizationController : ControllerBase
         _organizationService = organizationService;
     }
 
-    [HttpPost]
-    public async Task<Organization> CreateNew([FromBody] CreateOrganizationDto dto)
+    [HttpPost("create")]
+    public async Task<OrganizationDto> CreateNew([FromBody] CreateOrganizationDto dto)
     {
         return await _organizationService.CreateOrganizationAsync(dto.Name);
     }
+    
+    [HttpGet("{id:long}")]
+    public async Task<OrganizationDto> GetById(long id)
+    {
+        return await _organizationService.GetOrganizationByIdAsync(id);
+    }
+
 }

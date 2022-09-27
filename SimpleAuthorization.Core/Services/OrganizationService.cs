@@ -1,4 +1,6 @@
-﻿using SimpleAuthorization.Core.Entities;
+﻿using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Core.Services.Interfaces;
 
@@ -13,7 +15,7 @@ public class OrganizationService : IOrganizationService
         _organizationRepository = organizationRepository;
     }
 
-    public async Task<Organization> CreateOrganizationAsync(string name)
+    public async Task<OrganizationDto> CreateOrganizationAsync(string name)
     {
         var org = await _organizationRepository.CreateOrganizationAsync(new Organization()
         {
@@ -22,9 +24,11 @@ public class OrganizationService : IOrganizationService
         return org;
     }
 
-    public Task GetOrganizationByIdAsync(long id)
+    public async Task<OrganizationDto> GetOrganizationByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var org = await _organizationRepository.GetOrganizationByIdAsync(id);
+        org.ThrowIfNotFound($"Организация с id = {id} не найдена.");
+        return org!;
     }
 
     public Task GetListOfOrganizations()
