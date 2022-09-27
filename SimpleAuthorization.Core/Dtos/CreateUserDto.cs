@@ -19,4 +19,9 @@ public class CreateUserDto
     /// Фио пользоваетля
     /// </summary>
     public string? Fio { get; set; }
+
+    /// <summary>
+    /// Идентификатор организации пользователя
+    /// </summary>
+    public long? OrganizationId { get; set; }
 }

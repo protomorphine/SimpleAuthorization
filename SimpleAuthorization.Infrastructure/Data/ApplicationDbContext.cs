@@ -19,7 +19,7 @@ public class ApplicationDbContext : DbContext
     /// Коллекция сущностей - пользователь
     /// </summary>
     public DbSet<User> Users { get; set; }
-    
+
     /// <summary>
     /// Коллекция сущностей - организация
     /// </summary>

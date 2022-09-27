@@ -13,7 +13,7 @@ public class Organization
     /// </summary>
     [Column("id")]
     public long Id { get; set; }
-    
+
     /// <summary>
     /// Имя организации
     /// </summary>

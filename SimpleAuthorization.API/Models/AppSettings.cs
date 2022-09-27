@@ -8,5 +8,5 @@ public class AppSettings
     /// <summary>
     /// Описание настроек подключения к база данных
     /// </summary>
-    public DbOptions? DbOptions { get; set; } 
+    public DbOptions? DbOptions { get; set; }
 }

@@ -13,7 +13,7 @@ public class AuthReqiredAttribute : Attribute, IAuthorizationFilter
     public AuthReqiredAttribute()
     {
     }
-    
+
     public void OnAuthorization(AuthorizationFilterContext context)
     {  
         var cache = context.HttpContext.RequestServices.GetService<IMemoryCache>();

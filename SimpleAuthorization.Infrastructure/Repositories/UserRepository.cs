@@ -16,7 +16,7 @@ public class UserRepository : IUserRepository
     /// Контекст базы данных
     /// </summary>
     private readonly ApplicationDbContext _dbContext;
-    
+
     /// <summary>
     /// Коллекция сущностей - пользователь
     /// </summary>
@@ -40,11 +40,11 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="entity">сущность - пользователь</param>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> CreateAsync(User entity)
+    public async Task<long> CreateAsync(User entity)
     {
         await _users.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
-        return entity.ToUserDto();
+        return entity.Id;
     }
 
     /// <summary>
@@ -52,12 +52,12 @@ public class UserRepository : IUserRepository
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto?> GetByIdAsync(long id)
+    public async Task<User?> GetByIdAsync(long id)
     {
         var result = await _users.Include(it => it.Organization)
             .FirstOrDefaultAsync(it => it.Id == id);
 
-        return result?.ToUserDto();
+        return result;
     }
 
     /// <summary>
@@ -79,5 +79,26 @@ public class UserRepository : IUserRepository
         return (await _users.Include(it => it.Organization)
             .ToListAsync())
             .ToUserDtoList();
+    }
+
+    /// <summary>
+    /// Метод удаления пользователя по идентификтаору
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    public async Task DeleteUserAsync(long id)
+    {
+        var user = await _users.FirstOrDefaultAsync(user => user.Id == id);
+        _users.Remove(user!);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Метод обновления пользователя
+    /// </summary>
+    /// <param name="user">сущность - пользователь</param>
+    public async Task UpdateUserAsync(User user)
+    {
+        _users.Update(user);
+        await _dbContext.SaveChangesAsync();
     }
 }

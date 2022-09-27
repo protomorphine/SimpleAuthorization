@@ -38,16 +38,27 @@ public class OrganizationService : IOrganizationService
     {
         var org = await _organizationRepository.GetOrganizationByIdAsync(id);
         org.ThrowIfNotFound($"Организация с id = {id} не найдена.");
-        return org!;
+        return org!.ToOrganizationDto();
     }
 
-    public Task GetListOfOrganizations()
+    public async Task<List<OrganizationDto>> GetListOfOrganizationsAsync()
     {
-        throw new NotImplementedException();
+        return await _organizationRepository.GetAllOrganizations();
     }
 
-    public Task DeleteOrganization(long id)
+    public async Task DeleteOrganization(long id)
     {
-        throw new NotImplementedException();
+        await _organizationRepository.DeleteOrganization(id);
+    }
+
+    public async Task<OrganizationDto> UpdateOrganizationAsync(long id, CreateOrganizationDto dto)
+    {
+        var org = await _organizationRepository.GetOrganizationByIdAsync(id);
+        org.ThrowIfNotFound($"Организация с id = {id} не найдена.");
+
+        org.Name = dto.Name;
+
+        await _organizationRepository.UpdateOrganizationAsync(org);
+        return org.ToOrganizationDto();
     }
 }

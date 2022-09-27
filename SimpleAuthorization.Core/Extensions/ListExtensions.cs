@@ -14,7 +14,7 @@ public static class ListExtensions
     {
         return users.Select(user => user.ToUserDto()).ToList();
     }
-    
+
     /// <summary>
     /// Мапинг списка сущностей организация на список дто
     /// </summary>

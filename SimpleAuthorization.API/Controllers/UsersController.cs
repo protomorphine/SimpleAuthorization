@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="request"><see cref="CreateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
-    [AuthReqired]
+    //[AuthReqired]
     [HttpPost("create")]
     public async Task<UserDto> CreateNew([FromBody] CreateUserDto request)
     {
@@ -59,5 +59,28 @@ public class UsersController : ControllerBase
     public async Task<List<UserDto>> GetAllUsers()
     {
         return await _usersService.GetAllAsync();
+    }
+
+    /// <summary>
+    /// Метод удаления пользователя по идентификатору
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteById(long id)
+    {
+        await _usersService.DeleteUserAsync(id);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Метод обновления пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <param name="dto">дто изменения и создания пользователя</param>
+    /// <returns>дто измененного пользователя</returns>
+    [HttpPut("{id:long}")]
+    public async Task<UserDto> UpdateById(long id, [FromBody] CreateUserDto dto)
+    {
+        return await _usersService.UpdateUserAsync(id, dto);
     }
 }

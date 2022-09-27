@@ -13,14 +13,14 @@ public interface IUserRepository
     /// </summary>
     /// <param name="entity">сущность - пользователь</param>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> CreateAsync(User entity);
+    Task<long> CreateAsync(User entity);
 
     /// <summary>
     /// Получение пользователя по идентификатору
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto?> GetByIdAsync(long id);
+    Task<User?> GetByIdAsync(long id);
 
     /// <summary>
     /// Получение пользователя по логину
@@ -32,6 +32,18 @@ public interface IUserRepository
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
-    /// <returns>список <see cref="User"/></returns>
+    /// <returns>список <see cref="UserDto"/></returns>
     Task<List<UserDto>> GetUsersAsync();
+
+    /// <summary>
+    /// Метод удаления пользователя по идентификтаору
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    Task DeleteUserAsync(long id);
+
+    /// <summary>
+    /// Метод обновления пользователя
+    /// </summary>
+    /// <param name="user">сущность - пользователь</param>
+    Task UpdateUserAsync(User user);
 }

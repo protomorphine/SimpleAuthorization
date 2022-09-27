@@ -27,4 +27,8 @@ public interface IUsersService
     /// <returns><see cref="List{UserDto}"/></returns>
     Task<List<UserDto>> GetAllAsync();
 
+    Task DeleteUserAsync(long id);
+
+    Task<UserDto> UpdateUserAsync(long id, CreateUserDto dto);
+
 }

@@ -32,13 +32,13 @@ public class User
     /// </summary>
     [Column("fio")]
     public string? Fio { get; set; }
-    
+
     /// <summary>
     /// ID организации пользователя
     /// </summary>
     [Column("org_id")]
     public long? OrganizationId { get; set; }
-    
+
     /// <summary>
     /// Связь сущностей пользователь - организация
     /// </summary>

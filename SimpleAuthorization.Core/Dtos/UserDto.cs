@@ -19,7 +19,7 @@ public class UserDto
     /// ФИО пользователя
     /// </summary>
     public string? Fio { get; set; }
-    
+
     /// <summary>
     /// Имя организации в которой состоит пользователь
     /// </summary>

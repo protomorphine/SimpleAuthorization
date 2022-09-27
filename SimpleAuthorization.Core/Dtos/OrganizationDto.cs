@@ -9,11 +9,9 @@ public class OrganizationDto
     /// Идентификатор организации
     /// </summary>
     public long OrganizationId { get; set; }
-    
+
     /// <summary>
     /// Имя организации
     /// </summary>
     public string OrganizationName { get; set; }
-    
-    
 }

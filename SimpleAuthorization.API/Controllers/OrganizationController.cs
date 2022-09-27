@@ -26,7 +26,7 @@ public class OrganizationController : ControllerBase
     {
         _organizationService = organizationService;
     }
-    
+
     /// <summary>
     /// Метод создания организации
     /// </summary>
@@ -37,7 +37,7 @@ public class OrganizationController : ControllerBase
     {
         return await _organizationService.CreateOrganizationAsync(dto.Name);
     }
-    
+
     /// <summary>
     /// Метод получения организации по id
     /// </summary>
@@ -49,4 +49,36 @@ public class OrganizationController : ControllerBase
         return await _organizationService.GetOrganizationByIdAsync(id);
     }
 
+    /// <summary>
+    /// Метод удаления организации по идентификатору организации
+    /// </summary>
+    /// <param name="id">идентификатор организации</param>
+    [HttpDelete("{id:long}")]
+    public async Task<IActionResult> DeleteById(long id)
+    {
+        await _organizationService.DeleteOrganization(id);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Метод обновления организации
+    /// </summary>
+    /// <param name="id">идентификатор организации</param>
+    /// <param name="dto">дто изменения и создания организации</param>
+    /// <returns>дто измененной организации</returns>
+    [HttpPut("{id:long}")]
+    public async Task<OrganizationDto> UpdateById(long id, [FromBody] CreateOrganizationDto dto)
+    {
+        return await _organizationService.UpdateOrganizationAsync(id, dto);
+    }
+
+    /// <summary>
+    /// Метод получения списка всех организаций
+    /// </summary>
+    /// <returns>список организаций</returns>
+    [HttpGet("all")]
+    public async Task<List<OrganizationDto>> GetAll()
+    {
+        return await _organizationService.GetListOfOrganizationsAsync();
+    }
 }

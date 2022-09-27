@@ -22,7 +22,9 @@ public interface IOrganizationService
     /// <returns><see cref="OrganizationDto"/></returns>
     Task<OrganizationDto> GetOrganizationByIdAsync(long id);
 
-    Task GetListOfOrganizations();
+    Task<List<OrganizationDto>> GetListOfOrganizationsAsync();
 
     Task DeleteOrganization(long id);
+
+    Task<OrganizationDto> UpdateOrganizationAsync(long id, CreateOrganizationDto dto);
 }
