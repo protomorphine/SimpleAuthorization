@@ -15,6 +15,11 @@ public class OrganizationService : IOrganizationService
         _organizationRepository = organizationRepository;
     }
 
+    /// <summary>
+    /// Метод создания новой организации
+    /// </summary>
+    /// <param name="name">имя организации</param>
+    /// <returns><see cref="OrganizationDto"/></returns>
     public async Task<OrganizationDto> CreateOrganizationAsync(string name)
     {
         var org = await _organizationRepository.CreateOrganizationAsync(new Organization()
@@ -24,6 +29,11 @@ public class OrganizationService : IOrganizationService
         return org;
     }
 
+    /// <summary>
+    /// Метод получения организации по id
+    /// </summary>
+    /// <param name="id">идентификатор организации</param>
+    /// <returns><see cref="OrganizationDto"/></returns>
     public async Task<OrganizationDto> GetOrganizationByIdAsync(long id)
     {
         var org = await _organizationRepository.GetOrganizationByIdAsync(id);

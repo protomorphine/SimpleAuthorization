@@ -25,6 +25,10 @@ public class Organization
     /// </summary>
     public virtual List<User> Users { get; set; }
 
+    /// <summary>
+    /// Метод мапинга сущности на дто
+    /// </summary>
+    /// <returns><see cref="OrganizationDto"/></returns>
     public OrganizationDto ToOrganizationDto()
     {
         return new OrganizationDto()

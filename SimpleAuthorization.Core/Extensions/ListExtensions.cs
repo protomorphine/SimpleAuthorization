@@ -14,4 +14,14 @@ public static class ListExtensions
     {
         return users.Select(user => user.ToUserDto()).ToList();
     }
+    
+    /// <summary>
+    /// Мапинг списка сущностей организация на список дто
+    /// </summary>
+    /// <param name="orgs">список сущностей - организация</param>
+    /// <returns>Список дто</returns>
+    public static List<OrganizationDto> ToOrganizationDtoList(this IEnumerable<Organization> orgs)
+    {
+        return orgs.Select(user => user.ToOrganizationDto()).ToList();
+    }
 }
