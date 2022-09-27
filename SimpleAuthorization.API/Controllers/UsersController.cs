@@ -43,7 +43,7 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="id">id пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    [AuthReqired]
+    //[AuthReqired]
     [HttpGet("{id}")]
     public async Task<UserDto> GetById(long id)
     {

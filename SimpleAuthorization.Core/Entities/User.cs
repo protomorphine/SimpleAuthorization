@@ -42,7 +42,7 @@ public class User
     /// <summary>
     /// Связь сущностей пользователь - организация
     /// </summary>
-    public Organization? Organization { get; set; }
+    public virtual Organization? Organization { get; set; }
 
     /// <summary>
     /// Мапинг сущности на дто
@@ -54,7 +54,8 @@ public class User
         {
             Fio = Fio!,
             Login = Login!,
-            Id = Id
+            Id = Id,
+            OrganizationName = Organization?.Name
         };
     }
 }

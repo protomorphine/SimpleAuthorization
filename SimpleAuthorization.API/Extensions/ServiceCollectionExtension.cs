@@ -20,6 +20,7 @@ public static class ServiceCollectionExtension
     {
         services.AddTransient<IAuthManager, AuthManager>();
         services.AddTransient<IUsersService, UsersService>();
+        services.AddTransient<IOrganizationService, OrganizationService>();
     }
 
     /// <summary>
@@ -29,5 +30,6 @@ public static class ServiceCollectionExtension
     public static void RegisterRepositories(this IServiceCollection services)
     {
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IOrganizationRepository, OrganizationRepository>();
     }
 }

@@ -19,4 +19,6 @@ public class UserDto
     /// ФИО пользователя
     /// </summary>
     public string? Fio { get; set; }
+    
+    public string? OrganizationName { get; set; }
 }
