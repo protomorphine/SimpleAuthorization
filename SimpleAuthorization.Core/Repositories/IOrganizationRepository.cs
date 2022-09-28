@@ -20,7 +20,7 @@ public interface IOrganizationRepository
     /// </summary>
     /// <param name="id">идентификатор</param>
     /// <returns>сущность - орагнизация</returns>
-    Task<Organization> GetOrganizationByIdAsync(long id);
+    Task<Organization?> GetOrganizationByIdAsync(long id);
 
     /// <summary>
     /// Метод удаления организации по идентфиикатору

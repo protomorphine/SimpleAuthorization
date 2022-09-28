@@ -49,7 +49,7 @@ public class OrganizationRepository : IOrganizationRepository
     /// </summary>
     /// <param name="id">идентификатор</param>
     /// <returns>сущность - орагнизация</returns>
-    public async Task<Organization> GetOrganizationByIdAsync(long id)
+    public async Task<Organization?> GetOrganizationByIdAsync(long id)
     {
         var org = await _organizations.FirstOrDefaultAsync(org => org.Id == id);
         return org;
