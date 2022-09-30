@@ -13,5 +13,5 @@ public class OrganizationDto
     /// <summary>
     /// Имя организации
     /// </summary>
-    public string OrganizationName { get; set; }
+    public string OrganizationName { get; set; } = String.Empty;
 }

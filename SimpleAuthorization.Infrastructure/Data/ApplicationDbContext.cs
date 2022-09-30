@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.Core.Entities;
-using SimpleAuthorization.Infrastructure.Data.Config;
 
 namespace SimpleAuthorization.Infrastructure.Data;
 

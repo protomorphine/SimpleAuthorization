@@ -37,7 +37,10 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> CreateNewAsync(CreateUserDto dto)
     {
-        var user = await _usersRepository.GetByLoginAsync(dto.Login);
+        if (dto == null)
+            throw new InvalidOperationException("Данные создания пользователя отсутствуют.");
+        
+        var user = await _usersRepository.GetByLoginAsync(dto.Login!);
         if (user != null)
             throw new UserAlreadyExistException($"Пользователь с логином {dto.Login} уже есть в системе.");
 
@@ -100,8 +103,8 @@ public class UsersService : IUsersService
         user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
 
         user!.Fio = dto.Fio;
-        user!.Login = dto.Login;
-        user!.PasswordHash = dto.Password!.ComputeSha256Hash();
+        user.Login = dto.Login;
+        user.PasswordHash = dto.Password!.ComputeSha256Hash();
         user.OrganizationId = dto.OrganizationId;
         user.Organization = await _organizationRepository.GetAsync(user.OrganizationId!.Value);
 

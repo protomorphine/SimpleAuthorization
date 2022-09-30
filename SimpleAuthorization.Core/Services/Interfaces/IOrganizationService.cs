@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using SimpleAuthorization.Core.Dtos;
-using SimpleAuthorization.Core.Entities;
+﻿using SimpleAuthorization.Core.Dtos;
 
 namespace SimpleAuthorization.Core.Services.Interfaces;
 

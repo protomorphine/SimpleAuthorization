@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleAuthorization.Core.Dtos;
-using SimpleAuthorization.Core.Entities;
 using SimpleAuthorization.Core.Services.Interfaces;
-using SQLitePCL;
 
 namespace SimpleAuthorization.API.Controllers;
 

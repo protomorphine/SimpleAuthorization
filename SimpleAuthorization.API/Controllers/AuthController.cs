@@ -59,6 +59,6 @@ public class AuthController : ControllerBase
     public async Task<UserDto> GetCurrentUserInfo()
     {
         var token = Request.Cookies["auth"];
-        return await _authManager.GetUserByTokenAsync(token);
+        return await _authManager.GetUserByTokenAsync(token ?? throw new InvalidOperationException());
     }
 }

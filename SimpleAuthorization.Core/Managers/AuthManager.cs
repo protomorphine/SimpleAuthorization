@@ -45,7 +45,7 @@ public class AuthManager : IAuthManager
         if (user == null)
             throw new UnauthorizedException("Unauthorized");
 
-        return user!.ToUserDto();
+        return user.ToUserDto();
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class AuthManager : IAuthManager
 
         user.ThrowIfNotFound($"Пользователь {dto.Login!} не найден.");
 
-        if (hashedPassword != user.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
+        if (hashedPassword != user!.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
 
         var userToken = Guid.NewGuid().ToString();
         _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));

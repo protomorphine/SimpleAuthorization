@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.API.Models;
 using Hellang.Middleware.ProblemDetails;
-using SimpleAuthorization.API.Exceptions;
 using SimpleAuthorization.API.Extensions;
-using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Infrastructure.Data;
 using ProblemDetailsExtensions = SimpleAuthorization.API.Extensions.ProblemDetailsExtensions;
 

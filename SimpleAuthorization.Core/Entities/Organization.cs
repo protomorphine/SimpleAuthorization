@@ -23,7 +23,7 @@ public class Organization : IEntity<long>
     /// <summary>
     /// Связь сущностей организаця - пользователь
     /// </summary>
-    public virtual List<User> Users { get; set; }
+    public virtual List<User>? Users { get; set; }
 
     /// <summary>
     /// Метод мапинга сущности на дто

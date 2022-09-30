@@ -10,8 +10,7 @@ public interface IAuthManager
     /// <summary>
     /// Авторизация пользователя по логину и паролю
     /// </summary>
-    /// <param name="username">логин</param>
-    /// <param name="password">пароль</param>
+    /// <param name="dto">дто авторизации</param>
     Task<string> SignInAsync(SignInDto dto);
 
     /// <summary>

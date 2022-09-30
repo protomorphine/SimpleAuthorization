@@ -4,6 +4,9 @@ using SimpleAuthorization.Core.Entities;
 
 namespace SimpleAuthorization.Infrastructure.Data.Config;
 
+/// <summary>
+/// Конфигурация сущности - Организация
+/// </summary>
 public class OrganizationsConfigurations : IEntityTypeConfiguration<Organization>
 {
     public void Configure(EntityTypeBuilder<Organization> builder)
