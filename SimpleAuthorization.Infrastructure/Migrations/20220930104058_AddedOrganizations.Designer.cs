@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleAuthorization.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using SimpleAuthorization.Infrastructure.Data;
 namespace SimpleAuthorization.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220930104058_AddedOrganizations")]
+    partial class AddedOrganizations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0-rc.1.22426.7");
@@ -55,13 +58,6 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT")
                         .HasColumnName("password_hash");
-
-                    b.Property<string>("UserStatus")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("Active")
-                        .HasColumnName("status");
 
                     b.HasKey("Id");
 

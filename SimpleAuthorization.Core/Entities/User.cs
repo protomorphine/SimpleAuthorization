@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using System.ComponentModel.DataAnnotations.Schema;
+using SimpleAuthorization.Core.Enums;
 
 namespace SimpleAuthorization.Core.Entities;
 
@@ -38,12 +39,19 @@ public class User : IEntity<long>
     /// </summary>
     [Column("org_id")]
     public long? OrganizationId { get; set; }
-
+    
+    /// <summary>
+    /// Статус учетной записи
+    /// </summary>
+    [Column("status")]
+    public UserStatus UserStatus { get; set; }
+    
     /// <summary>
     /// Связь сущностей пользователь - организация
     /// </summary>
     public virtual Organization? Organization { get; set; }
 
+    
     /// <summary>
     /// Мапинг сущности на дто
     /// </summary>

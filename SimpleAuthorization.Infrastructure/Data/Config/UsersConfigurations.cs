@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimpleAuthorization.Core.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SimpleAuthorization.Core.Enums;
 
 namespace SimpleAuthorization.Infrastructure.Data.Config;
 
@@ -13,6 +14,10 @@ internal class UsersConfigurations : IEntityTypeConfiguration<User>
     {
         builder.ToTable("users");
         builder.HasKey(x => x.Id);
+
+        builder.Property(user => user.UserStatus)
+            .HasDefaultValue(UserStatus.Active)
+            .HasConversion<string>();
 
         builder.HasOne(user => user.Organization)
             .WithMany(org => org.Users)

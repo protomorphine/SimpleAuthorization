@@ -4,6 +4,11 @@ using SimpleAuthorization.API.Models;
 using Hellang.Middleware.ProblemDetails;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.Infrastructure.Data;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using ProblemDetailsExtensions = SimpleAuthorization.API.Extensions.ProblemDetailsExtensions;
 
 namespace SimpleAuthorization.API;
@@ -55,7 +60,12 @@ public class Startup
             .AddScoped(_ => _appSettings)
             .AddScoped(_ => _dbOptions);
 
-        services.AddControllers();
+        services.AddControllers()
+            .AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                opt.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+            });
 
         services.AddProblemDetails(ProblemDetailsExtensions.ConfigureProblemDetails);
 

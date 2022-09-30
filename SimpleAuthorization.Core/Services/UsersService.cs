@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using SimpleAuthorization.Core.Entities;
+using SimpleAuthorization.Core.Enums;
 using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
@@ -49,7 +50,8 @@ public class UsersService : IUsersService
             Fio = dto.Fio,
             Login = dto.Login,
             PasswordHash = dto.Password!.ComputeSha256Hash(),
-            OrganizationId = dto.OrganizationId
+            OrganizationId = dto.OrganizationId,
+            UserStatus = UserStatus.Blocked
         });
 
         var created = await _usersRepository.GetAsync(createdId);
