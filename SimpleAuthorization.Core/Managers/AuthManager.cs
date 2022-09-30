@@ -1,5 +1,6 @@
 ﻿using SimpleAuthorization.Core.Dtos;
 using Microsoft.Extensions.Caching.Memory;
+using SimpleAuthorization.Core.Enums;
 using SimpleAuthorization.Core.Exceptions;
 using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
@@ -61,6 +62,9 @@ public class AuthManager : IAuthManager
 
         if (hashedPassword != user!.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
 
+        if (user.UserStatus is UserStatus.Blocked)
+            throw new UnauthorizedException($"Учетная запись {user.Login} заблокирована.");
+        
         var userToken = Guid.NewGuid().ToString();
         _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));
 
