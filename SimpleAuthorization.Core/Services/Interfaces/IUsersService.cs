@@ -12,7 +12,7 @@ public interface IUsersService
     /// </summary>
     /// <param name="dto"><see cref="CreateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> CreateNewAsync(CreateUserDto dto);
+    Task<UserDto> CreateNewAsync(CreateAndUpdateUserDto dto);
 
     /// <summary>
     /// Получение пользоваля по идентификатору
@@ -39,6 +39,12 @@ public interface IUsersService
     /// <param name="id">идентификатор пользователя</param>
     /// <param name="dto">дто обновления пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    Task<UserDto> UpdateUserAsync(long id, CreateUserDto dto);
+    Task<UserDto> UpdateUserAsync(long id, CreateAndUpdateUserDto dto);
 
+    /// <summary>
+    /// Метод блокировки пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns><see cref="UserDto"/></returns>
+    Task<UserDto> BlockUserAsync(long id);
 }

@@ -33,7 +33,7 @@ public class UsersController : ControllerBase
     /// <returns><see cref="UserDto"/></returns>
     //[AuthReqired]
     [HttpPost("create")]
-    public async Task<UserDto> CreateNew([FromBody] CreateUserDto request)
+    public async Task<UserDto> CreateNew([FromBody] CreateAndUpdateUserDto request)
     {
         return await _usersService.CreateNewAsync(request);
     }
@@ -79,8 +79,19 @@ public class UsersController : ControllerBase
     /// <param name="dto">дто изменения и создания пользователя</param>
     /// <returns>дто измененного пользователя</returns>
     [HttpPut("{id:long}")]
-    public async Task<UserDto> UpdateById(long id, [FromBody] CreateUserDto dto)
+    public async Task<UserDto> UpdateById(long id, [FromBody] CreateAndUpdateUserDto dto)
     {
         return await _usersService.UpdateUserAsync(id, dto);
+    }
+
+    /// <summary>
+    /// Метод блокировки пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns><see cref="UserDto"/> заблокированного пользователя</returns>
+    [HttpPut("{id:long}/block")]
+    public async Task<UserDto> BlockUser(long id)
+    {
+        return await _usersService.BlockUserAsync(id);
     }
 }

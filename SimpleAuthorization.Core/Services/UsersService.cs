@@ -36,7 +36,7 @@ public class UsersService : IUsersService
     /// </summary>
     /// <param name="dto"><see cref="CreateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> CreateNewAsync(CreateUserDto dto)
+    public async Task<UserDto> CreateNewAsync(CreateAndUpdateUserDto dto)
     {
         if (dto == null)
             throw new InvalidOperationException("Данные создания пользователя отсутствуют.");
@@ -98,7 +98,7 @@ public class UsersService : IUsersService
     /// <param name="id">идентификатор пользователя</param>
     /// <param name="dto">дто обновления пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
-    public async Task<UserDto> UpdateUserAsync(long id, CreateUserDto dto)
+    public async Task<UserDto> UpdateUserAsync(long id, CreateAndUpdateUserDto dto)
     {
         var user = await _usersRepository.GetAsync(id);
 
@@ -114,5 +114,21 @@ public class UsersService : IUsersService
 
         return user.ToUserDto();
 
+    }
+
+    /// <summary>
+    /// Метод блокировки пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns><see cref="UserDto"/> заблокированного пользователя</returns>
+    public async Task<UserDto> BlockUserAsync(long id)
+    {
+        var user = await _usersRepository.GetAsync(id);
+        user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
+
+        user!.UserStatus = UserStatus.Blocked;
+        await _usersRepository.UpdateAsync(user);
+
+        return user.ToUserDto();
     }
 }

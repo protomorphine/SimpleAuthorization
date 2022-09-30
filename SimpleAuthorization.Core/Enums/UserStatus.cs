@@ -8,10 +8,10 @@ public enum UserStatus
     /// <summary>
     /// Учетная запись активна
     /// </summary>
-    Active = 0,
+    Active,
     
     /// <summary>
     /// Учетная запись заблокирована
     /// </summary>
-    Blocked = 1
+    Blocked
 }
