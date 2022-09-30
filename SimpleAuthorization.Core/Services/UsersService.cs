@@ -51,7 +51,7 @@ public class UsersService : IUsersService
             Login = dto.Login,
             PasswordHash = dto.Password!.ComputeSha256Hash(),
             OrganizationId = dto.OrganizationId,
-            UserStatus = UserStatus.Blocked
+            UserStatus = UserStatus.Active
         });
 
         var created = await _usersRepository.GetAsync(createdId);
@@ -127,6 +127,22 @@ public class UsersService : IUsersService
         user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
 
         user!.UserStatus = UserStatus.Blocked;
+        await _usersRepository.UpdateAsync(user);
+
+        return user.ToUserDto();
+    }
+
+    /// <summary>
+    /// Метод разблокировки пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns><see cref="UserDto"/> разблокированного пользователя</returns>
+    public async Task<UserDto> UnblockUserAsync(long id)
+    {
+        var user = await _usersRepository.GetAsync(id);
+        user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
+
+        user!.UserStatus = UserStatus.Active;
         await _usersRepository.UpdateAsync(user);
 
         return user.ToUserDto();

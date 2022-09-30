@@ -27,7 +27,7 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Метод создания нового пользователя
+    /// Создает нового пользователя
     /// </summary>
     /// <param name="request"><see cref="CreateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
@@ -62,7 +62,7 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Метод удаления пользователя по идентификатору
+    /// Удаляет пользователя
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     [HttpDelete("{id}")]
@@ -73,7 +73,7 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Метод обновления пользователя
+    /// Обновление пользователя
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <param name="dto">дто изменения и создания пользователя</param>
@@ -85,7 +85,7 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Метод блокировки пользователя
+    /// Блокирует пользоваетляя
     /// </summary>
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/> заблокированного пользователя</returns>
@@ -93,5 +93,16 @@ public class UsersController : ControllerBase
     public async Task<UserDto> BlockUser(long id)
     {
         return await _usersService.BlockUserAsync(id);
+    }
+
+    /// <summary>
+    /// Разблокирует пользователя
+    /// </summary>
+    /// <param name="id"></param>идентификатор пользователя
+    /// <returns><see cref="UserDto"/> разблокированного пользователя</returns>
+    [HttpPut("{id:long}/unblock")]
+    public async Task<UserDto> UnblockUser(long id)
+    {
+        return await _usersService.UnblockUserAsync(id);
     }
 }

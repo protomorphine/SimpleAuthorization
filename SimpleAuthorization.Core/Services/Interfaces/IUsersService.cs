@@ -47,4 +47,11 @@ public interface IUsersService
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/></returns>
     Task<UserDto> BlockUserAsync(long id);
+
+    /// <summary>
+    /// Метод разблокировки пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns><see cref="UserDto"/> разблокированного пользователя</returns>
+    Task<UserDto> UnblockUserAsync(long id);
 }
