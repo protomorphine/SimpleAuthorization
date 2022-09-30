@@ -69,6 +69,19 @@ public class Startup
                 Version = "v1",
                 Description = "Simple auth service"
             });
+
+            var xmlFilesPaths = new[]
+            {
+                "SimpleAuthorization.API.xml",
+                "SimpleAuthorization.Core.xml",
+                "SimpleAuthorization.Infrastructure.xml",
+            };
+
+            foreach (var xmlFilePath in xmlFilesPaths)
+            {
+                var path = Path.Combine(AppContext.BaseDirectory, xmlFilePath);
+                options.IncludeXmlComments(path);
+            }
         });
 
         services.AddDbContext<ApplicationDbContext>(options =>
