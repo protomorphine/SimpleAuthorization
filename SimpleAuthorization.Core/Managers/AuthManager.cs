@@ -40,7 +40,7 @@ public class AuthManager : IAuthManager
     public async Task<UserDto> GetUserByTokenAsync(string token)
     {
         _cache.TryGetValue(token, out long userId);
-        var user = await _userRepository.GetByIdAsync(userId);
+        var user = await _userRepository.GetAsync(userId);
 
         if (user == null)
             throw new UnauthorizedException("Unauthorized");

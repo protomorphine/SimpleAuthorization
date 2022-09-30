@@ -27,8 +27,18 @@ public interface IUsersService
     /// <returns><see cref="List{UserDto}"/></returns>
     Task<List<UserDto>> GetAllAsync();
 
+    /// <summary>
+    /// Метод удаления пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
     Task DeleteUserAsync(long id);
 
+    /// <summary>
+    /// Метод обновления пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <param name="dto">дто обновления пользователя</param>
+    /// <returns><see cref="UserDto"/></returns>
     Task<UserDto> UpdateUserAsync(long id, CreateUserDto dto);
 
 }

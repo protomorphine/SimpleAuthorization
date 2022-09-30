@@ -23,6 +23,7 @@ public class UsersService : IUsersService
     /// Создает новый экземпляр <see cref="UsersService"/>
     /// </summary>
     /// <param name="userRepository">Репозитоий для работы с пользователями</param>
+    /// <param name="organizationRepository">Репозиторий для работы с организациями</param>
     public UsersService(IUserRepository userRepository, IOrganizationRepository organizationRepository)
     {
         _usersRepository = userRepository;
@@ -48,7 +49,7 @@ public class UsersService : IUsersService
             OrganizationId = dto.OrganizationId
         });
 
-        var created = await _usersRepository.GetByIdAsync(createdId);
+        var created = await _usersRepository.GetAsync(createdId);
 
         return created!.ToUserDto();
     }
@@ -60,7 +61,7 @@ public class UsersService : IUsersService
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> GetByIdAsync(long id)
     {
-        var user = await _usersRepository.GetByIdAsync(id);
+        var user = await _usersRepository.GetAsync(id);
         user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
 
         return user!.ToUserDto();
@@ -75,14 +76,26 @@ public class UsersService : IUsersService
         return await _usersRepository.GetUsersAsync();
     }
 
+    /// <summary>
+    /// Метод удаления пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
     public async Task DeleteUserAsync(long id)
     {
-        await _usersRepository.DeleteUserAsync(id);
+        var user = await _usersRepository.GetAsync(id);
+        user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
+        await _usersRepository.DeleteAsync(user!);
     }
 
+    /// <summary>
+    /// Метод обновления пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <param name="dto">дто обновления пользователя</param>
+    /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> UpdateUserAsync(long id, CreateUserDto dto)
     {
-        var user = await _usersRepository.GetByIdAsync(id);
+        var user = await _usersRepository.GetAsync(id);
 
         user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
 
@@ -90,9 +103,9 @@ public class UsersService : IUsersService
         user!.Login = dto.Login;
         user!.PasswordHash = dto.Password!.ComputeSha256Hash();
         user.OrganizationId = dto.OrganizationId;
-        user.Organization = await _organizationRepository.GetOrganizationByIdAsync(user.OrganizationId.Value);
+        user.Organization = await _organizationRepository.GetAsync(user.OrganizationId!.Value);
 
-        await _usersRepository.UpdateUserAsync(user);
+        await _usersRepository.UpdateAsync(user);
 
         return user.ToUserDto();
 

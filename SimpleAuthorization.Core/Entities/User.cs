@@ -7,7 +7,7 @@ namespace SimpleAuthorization.Core.Entities;
 /// Класс описаня сущности пользователь
 /// </summary>
 [Table("users")]
-public class User
+public class User : IEntity<long>
 {
     /// <summary>
     /// Идентификатор пользователя

@@ -6,7 +6,7 @@ namespace SimpleAuthorization.Core.Entities;
 /// <summary>
 /// Сущность организации
 /// </summary>
-public class Organization
+public class Organization : IEntity<long>
 {
     /// <summary>
     /// ID организации
