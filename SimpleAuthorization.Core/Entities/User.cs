@@ -47,6 +47,12 @@ public class User : IEntity<long>
     public UserStatus UserStatus { get; set; }
     
     /// <summary>
+    /// Роль пользователя
+    /// </summary>
+    [Column("role")]
+    public UserRoles UserRole { get; set; }
+    
+    /// <summary>
     /// Связь сущностей пользователь - организация
     /// </summary>
     public virtual Organization? Organization { get; set; }
