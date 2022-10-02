@@ -4,8 +4,6 @@ using SimpleAuthorization.API.Models;
 using Hellang.Middleware.ProblemDetails;
 using SimpleAuthorization.API.Extensions;
 using SimpleAuthorization.Infrastructure.Data;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -122,6 +120,8 @@ public class Startup
         app.UseRouting();
 
         app.UseProblemDetails();
+
+        app.UseRoleCheck();
 
         app.UseEndpoints(endpoints =>
         {
