@@ -1,4 +1,5 @@
 ﻿using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.Core.Enums;
 
 namespace SimpleAuthorization.Core.Services.Interfaces;
 
@@ -54,4 +55,11 @@ public interface IUsersService
     /// <param name="id">идентификатор пользователя</param>
     /// <returns><see cref="UserDto"/> разблокированного пользователя</returns>
     Task<UserDto> UnblockUserAsync(long id);
+
+    /// <summary>
+    /// Метод получения роли пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns>роль пользователя</returns>
+    Task<UserRoles> GetUserRole(long id);
 }

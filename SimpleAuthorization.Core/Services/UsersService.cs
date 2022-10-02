@@ -40,7 +40,7 @@ public class UsersService : IUsersService
     {
         if (dto == null)
             throw new InvalidOperationException("Данные создания пользователя отсутствуют.");
-        
+
         var user = await _usersRepository.GetByLoginAsync(dto.Login!);
         if (user != null)
             throw new UserAlreadyExistException($"Пользователь с логином {dto.Login} уже есть в системе.");
@@ -146,5 +146,17 @@ public class UsersService : IUsersService
         await _usersRepository.UpdateAsync(user);
 
         return user.ToUserDto();
+    }
+
+    /// <summary>
+    /// Метод получения роли пользователя
+    /// </summary>
+    /// <param name="id">идентификатор пользователя</param>
+    /// <returns>роль пользователя</returns>
+    public async Task<UserRoles> GetUserRole(long id)
+    {
+        var user = await _usersRepository.GetAsync(id);
+        user.ThrowIfNotFound($"Пользователь с id = {id} не найден.");
+        return user!.UserRole;
     }
 }
