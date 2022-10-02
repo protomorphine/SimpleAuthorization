@@ -9,7 +9,7 @@ public enum UserStatus
     /// Учетная запись активна
     /// </summary>
     Active,
-    
+
     /// <summary>
     /// Учетная запись заблокирована
     /// </summary>

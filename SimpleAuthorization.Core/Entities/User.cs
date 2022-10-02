@@ -39,25 +39,25 @@ public class User : IEntity<long>
     /// </summary>
     [Column("org_id")]
     public long? OrganizationId { get; set; }
-    
+
     /// <summary>
     /// Статус учетной записи
     /// </summary>
     [Column("status")]
     public UserStatus UserStatus { get; set; }
-    
+
     /// <summary>
     /// Роль пользователя
     /// </summary>
     [Column("role")]
     public UserRoles UserRole { get; set; }
-    
+
     /// <summary>
     /// Связь сущностей пользователь - организация
     /// </summary>
     public virtual Organization? Organization { get; set; }
 
-    
+
     /// <summary>
     /// Мапинг сущности на дто
     /// </summary>
