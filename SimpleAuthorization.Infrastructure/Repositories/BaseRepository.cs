@@ -19,7 +19,7 @@ public class BaseRepository<TEntity ,T, TContext> : IBaseRepository<TEntity, T>
     /// Сет сущностей
     /// </summary>
     private readonly DbSet<TEntity> _entities;
-    
+
     /// <summary>
     /// Контекст бд
     /// </summary>

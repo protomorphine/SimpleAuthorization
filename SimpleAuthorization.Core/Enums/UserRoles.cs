@@ -9,7 +9,7 @@ public enum UserRoles
     /// Администратор
     /// </summary>
     Administartor,
-    
+
     /// <summary>
     /// Пользователь
     /// </summary>
