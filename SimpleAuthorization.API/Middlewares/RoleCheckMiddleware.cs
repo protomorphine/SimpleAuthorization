@@ -28,7 +28,7 @@ public class RoleCheckMiddleware
     }
 
     /// <summary>
-    /// Основной метод мидлвары
+    /// Вызывает мидлвару
     /// </summary>
     /// <param name="context">контекст запроса</param>
     /// <exception cref="InvalidOperationException">недоступная операция</exception>
@@ -50,19 +50,25 @@ public class RoleCheckMiddleware
         var role = await userService!.GetUserRole(userId);
 
         if (role is UserRoles.Administartor)
+        {
             await _next.Invoke(context);
+            return;
+        }
 
+        var endpointMetadata = context.GetEndpoint()!.Metadata
+            .OfType<ControllerActionDescriptor>().First();
+        
         var currentEndpoint = new EndpointModel()
         {
-            Controller = context.GetEndpoint()!.Metadata.OfType<ControllerActionDescriptor>().First().ControllerName,
-            Action = context.GetEndpoint()!.Metadata.OfType<ControllerActionDescriptor>().First().ActionName,
+            Controller = endpointMetadata.ControllerName,
+            Action = endpointMetadata.ActionName,
             Method = context.Request.Method
         };
 
-        var approvedEndpoints = GetAllEndpoins()
+        var allowedEndpoints = GetAllEndpoins()
             .Where(it => it.Method == "GET" || it.Controller == "AuthController").ToList();
 
-        var contains = approvedEndpoints
+        var contains = allowedEndpoints
             .FirstOrDefault(it => it.Action == currentEndpoint.Action &&
                                   it.Controller == currentEndpoint.Controller &&
                                   it.Method == currentEndpoint.Method) != null;
