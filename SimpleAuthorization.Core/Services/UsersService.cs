@@ -18,6 +18,9 @@ public class UsersService : IUsersService
     /// </summary>
     private readonly IUserRepository _usersRepository;
 
+    /// <summary>
+    /// Репозитоий для работы с организациями
+    /// </summary>
     private readonly IOrganizationRepository _organizationRepository;
 
     /// <summary>
@@ -34,7 +37,7 @@ public class UsersService : IUsersService
     /// <summary>
     /// Создает нового пользователя
     /// </summary>
-    /// <param name="dto"><see cref="CreateUserDto"/></param>
+    /// <param name="dto"><see cref="CreateAndUpdateUserDto"/></param>
     /// <returns><see cref="UserDto"/></returns>
     public async Task<UserDto> CreateNewAsync(CreateAndUpdateUserDto dto)
     {
