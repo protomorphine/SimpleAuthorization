@@ -1,4 +1,6 @@
-﻿namespace SimpleAuthorization.Core.Dtos;
+﻿using SimpleAuthorization.Core.Enums;
+
+namespace SimpleAuthorization.Core.Dtos;
 
 /// <summary>
 /// Дто пользователя
@@ -24,4 +26,9 @@ public class UserDto
     /// Имя организации в которой состоит пользователь
     /// </summary>
     public string? OrganizationName { get; set; }
+    
+    /// <summary>
+    /// Роль пользователя
+    /// </summary>
+    public UserRoles Role { get; set; }
 }

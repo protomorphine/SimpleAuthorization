@@ -64,12 +64,13 @@ public class User : IEntity<long>
     /// <returns><see cref="UserDto"/></returns>
     public UserDto ToUserDto()
     {
-        return new UserDto
+        return new()
         {
             Fio = Fio!,
             Login = Login!,
             Id = Id,
-            OrganizationName = Organization?.Name
+            OrganizationName = Organization?.Name,
+            Role = UserRole
         };
     }
 }
