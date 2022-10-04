@@ -18,6 +18,7 @@ public interface IUserRepository : IBaseRepository<User, long>
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
+    /// <param name="dto">параметры фильтрации списка пользователей</param>
     /// <returns>список <see cref="UserDto"/></returns>
-    Task<List<UserDto>> GetUsersAsync();
+    Task<List<UserDto>> GetUsersAsync(GetUsersQueryParamsDto dto);
 }

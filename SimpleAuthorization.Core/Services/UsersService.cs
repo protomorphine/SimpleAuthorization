@@ -78,10 +78,11 @@ public class UsersService : IUsersService
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
+    /// <param name="dto">параметры фильтрации списка пользователей</param>
     /// <returns><see cref="List{UserDto}"/></returns>
-    public async Task<List<UserDto>> GetAllAsync()
+    public async Task<List<UserDto>> GetAllAsync(GetUsersQueryParamsDto dto)
     {
-        return await _usersRepository.GetUsersAsync();
+        return await _usersRepository.GetUsersAsync(dto);
     }
 
     /// <summary>

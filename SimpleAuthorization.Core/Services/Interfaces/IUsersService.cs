@@ -25,8 +25,9 @@ public interface IUsersService
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
+    /// <param name="dto">параметры фильтрации списка пользователей</param>
     /// <returns><see cref="List{UserDto}"/></returns>
-    Task<List<UserDto>> GetAllAsync();
+    Task<List<UserDto>> GetAllAsync(GetUsersQueryParamsDto dto);
 
     /// <summary>
     /// Метод удаления пользователя

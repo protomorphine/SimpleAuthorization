@@ -53,12 +53,13 @@ public class UsersController : ControllerBase
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
+    /// <param name="dto">параметры фильтрации списка пользователей</param>
     /// <returns><see cref="List{UserDto}"/></returns>
     [AuthReqired]
     [HttpGet("all")]
-    public async Task<List<UserDto>> GetAllUsers()
+    public async Task<List<UserDto>> GetAllUsers([FromQuery] GetUsersQueryParamsDto dto)
     {
-        return await _usersService.GetAllAsync();
+        return await _usersService.GetAllAsync(dto);
     }
 
     /// <summary>

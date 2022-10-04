@@ -4,6 +4,7 @@ using SimpleAuthorization.Core.Entities;
 using SimpleAuthorization.Core.Extensions;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Infrastructure.Data;
+using static SimpleAuthorization.Core.Enums.UserStatus;
 
 namespace SimpleAuthorization.Infrastructure.Repositories;
 
@@ -58,11 +59,24 @@ public class UserRepository : BaseRepository<User, long, ApplicationDbContext>, 
     /// <summary>
     /// Получение списка всех пользователей
     /// </summary>
+    /// <param name="dto">параметры фильтрации списка пользователей</param>
     /// <returns>список <see cref="User"/></returns>
-    public async Task<List<UserDto>> GetUsersAsync()
+    public async Task<List<UserDto>> GetUsersAsync(GetUsersQueryParamsDto dto)
     {
-        return (await _users.Include(it => it.Organization)
-            .ToListAsync())
-            .ToUserDtoList();
+        var result = _users.Include(user => user.Organization)
+            .AsQueryable();
+
+        result = dto.OnlyActive switch
+        {
+            true => result.Where(user => user.UserStatus == Active),
+            false => result
+        };
+
+        if (dto.SearchString != null)
+            result = result.Where(user =>
+                user.Fio.ToLower().Contains(dto.SearchString.ToLower()));
+
+
+        return (await result.ToListAsync()).ToUserDtoList();
     }
 }
