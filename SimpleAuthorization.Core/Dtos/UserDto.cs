@@ -23,9 +23,9 @@ public class UserDto
     public string? Fio { get; set; }
 
     /// <summary>
-    /// Имя организации в которой состоит пользователь
+    /// Организация пользователя
     /// </summary>
-    public string? OrganizationName { get; set; }
+    public OrganizationDto? Organization { get; set; }
     
     /// <summary>
     /// Роль пользователя

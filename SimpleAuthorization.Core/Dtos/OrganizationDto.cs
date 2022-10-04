@@ -8,10 +8,10 @@ public class OrganizationDto
     /// <summary>
     /// Идентификатор организации
     /// </summary>
-    public long OrganizationId { get; set; }
+    public long OrgId { get; set; }
 
     /// <summary>
     /// Имя организации
     /// </summary>
-    public string OrganizationName { get; set; } = String.Empty;
+    public string OrgName { get; set; } = String.Empty;
 }

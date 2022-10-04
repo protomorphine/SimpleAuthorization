@@ -33,8 +33,8 @@ public class Organization : IEntity<long>
     {
         return new OrganizationDto()
         {
-            OrganizationId = Id,
-            OrganizationName = Name!
+            OrgId = Id,
+            OrgName = Name!
         };
     }
 }

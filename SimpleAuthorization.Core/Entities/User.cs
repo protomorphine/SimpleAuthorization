@@ -69,8 +69,8 @@ public class User : IEntity<long>
             Fio = Fio!,
             Login = Login!,
             Id = Id,
-            OrganizationName = Organization?.Name,
-            Role = UserRole
+            Role = UserRole,
+            Organization = Organization?.ToOrganizationDto(),
         };
     }
 }
