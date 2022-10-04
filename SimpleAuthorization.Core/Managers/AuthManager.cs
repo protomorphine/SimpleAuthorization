@@ -60,7 +60,7 @@ public class AuthManager : IAuthManager
 
         user.ThrowIfNotFound($"Пользователь {dto.Login!} не найден.");
 
-        if (hashedPassword != user!.PasswordHash) throw new UnauthorizedAccessException("Неверный пароль");
+        if (hashedPassword != user!.PasswordHash) throw new UnauthorizedException("Неверный пароль");
 
         if (user.UserStatus is UserStatus.Blocked)
             throw new UnauthorizedException($"Учетная запись {user.Login} заблокирована.");
