@@ -74,7 +74,7 @@ public class UserRepository : BaseRepository<User, long, ApplicationDbContext>, 
 
         if (dto.SearchString != null)
             result = result.Where(user =>
-                user.Fio.ToLower().Contains(dto.SearchString.ToLower()));
+                user.Fio!.ToLower().Contains(dto.SearchString.ToLower()));
 
 
         return (await result.ToListAsync()).ToUserDtoList();
