@@ -33,7 +33,7 @@ public class OrganizationController : ControllerBase
     [HttpPost("create")]
     public async Task<OrganizationDto> CreateNew([FromBody] CreateOrganizationDto dto)
     {
-        return await _organizationService.CreateOrganizationAsync(dto.Name);
+        return await _organizationService.CreateOrganizationAsync(dto);
     }
 
     /// <summary>

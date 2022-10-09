@@ -57,7 +57,7 @@ public class RoleCheckMiddleware
 
         var endpointMetadata = context.GetEndpoint()!.Metadata
             .OfType<ControllerActionDescriptor>().First();
-        
+
         var currentEndpoint = new EndpointModel()
         {
             Controller = endpointMetadata.ControllerName,

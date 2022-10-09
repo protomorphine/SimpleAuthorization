@@ -9,4 +9,9 @@ public class CreateOrganizationDto
     /// Имя организации
     /// </summary>
     public string Name { get; set; } = String.Empty;
+
+    /// <summary>
+    /// Идентификатор создателя организации
+    /// </summary>
+    public long CreatorId { get; set; }
 }

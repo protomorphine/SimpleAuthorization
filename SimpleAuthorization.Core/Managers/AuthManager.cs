@@ -64,7 +64,7 @@ public class AuthManager : IAuthManager
 
         if (user.UserStatus is UserStatus.Blocked)
             throw new UnauthorizedException($"Учетная запись {user.Login} заблокирована.");
-        
+
         var userToken = Guid.NewGuid().ToString();
         _cache.Set(userToken, user.Id, DateTimeOffset.Now.AddHours(1));
 

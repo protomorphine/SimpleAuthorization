@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace SimpleAuthorization.Core.Dtos;
+﻿namespace SimpleAuthorization.Core.Dtos;
 
 /// <summary>
 /// Параметры фильтрации списка пользователей
@@ -11,7 +9,7 @@ public class GetUsersQueryParamsDto
     /// Строка поиска
     /// </summary>
     public string? SearchString { get; set; }
-    
+
     /// <summary>
     /// Флаг активности
     /// </summary>
