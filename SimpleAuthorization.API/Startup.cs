@@ -93,6 +93,7 @@ public class Startup
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseSqlite(_dbOptions.ConnectionString);
+            options.UseSnakeCaseNamingConvention();
         });
 
         services.AddMemoryCache();
