@@ -13,5 +13,5 @@ public class GetUsersQueryParamsDto
     /// <summary>
     /// Флаг активности
     /// </summary>
-    public bool OnlyActive { get; set; }
+    public bool? OnlyActive { get; set; }
 }

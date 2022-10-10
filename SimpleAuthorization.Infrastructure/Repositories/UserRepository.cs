@@ -69,7 +69,8 @@ public class UserRepository : BaseRepository<User, long, ApplicationDbContext>, 
         result = dto.OnlyActive switch
         {
             true => result.Where(user => user.UserStatus == Active),
-            false => result
+            false => result.Where(user => user.UserStatus == Blocked),
+            _ => result
         };
 
         if (dto.SearchString != null)
