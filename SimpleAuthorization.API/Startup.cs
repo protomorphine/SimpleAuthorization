@@ -98,9 +98,11 @@ public class Startup
 
         services.AddMemoryCache();
 
-        services.RegisterServices();
+        services.AddServices();
 
-        services.RegisterRepositories();
+        services.AddRepositories();
+        
+        services.AddValidators();
     }
 
     /// <summary>
@@ -122,7 +124,7 @@ public class Startup
 
         app.UseProblemDetails();
 
-        app.UseRoleCheck();
+        //app.UseRoleCheck();
 
         app.UseEndpoints(endpoints =>
         {

@@ -1,4 +1,8 @@
-﻿using SimpleAuthorization.Core.Managers;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using SimpleAuthorization.API.Validators;
+using SimpleAuthorization.Core.Dtos;
+using SimpleAuthorization.Core.Managers;
 using SimpleAuthorization.Core.Services;
 using SimpleAuthorization.Core.Repositories;
 using SimpleAuthorization.Core.Managers.Interfaces;
@@ -16,7 +20,7 @@ public static class ServiceCollectionExtension
     /// Метод регистрации сервисов
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    public static void RegisterServices(this IServiceCollection services)
+    public static void AddServices(this IServiceCollection services)
     {
         services.AddTransient<IAuthManager, AuthManager>();
         services.AddTransient<IUsersService, UsersService>();
@@ -27,9 +31,21 @@ public static class ServiceCollectionExtension
     /// Метод регистрации репозиториев
     /// </summary>
     /// <param name="services"><see cref="IServiceCollection"/></param>
-    public static void RegisterRepositories(this IServiceCollection services)
+    public static void AddRepositories(this IServiceCollection services)
     {
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IOrganizationRepository, OrganizationRepository>();
+    }
+    
+    /// <summary>
+    /// Метод регистрации валидаторов
+    /// </summary>
+    /// <param name="services"><see cref="IServiceCollection"/></param>
+    public static void AddValidators(this IServiceCollection services)
+    {
+        services.AddFluentValidationAutoValidation();
+        
+        services.AddScoped<IValidator<CreateOrganizationDto>, CreateOrganizationValidator>();
+        services.AddScoped<IValidator<CreateAndUpdateUserDto>, CreateUserValidator>();
     }
 }
