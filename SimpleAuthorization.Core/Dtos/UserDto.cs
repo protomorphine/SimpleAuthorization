@@ -26,7 +26,7 @@ public class UserDto
     /// Организация пользователя
     /// </summary>
     public OrganizationDto? Organization { get; set; }
-    
+
     /// <summary>
     /// Роль пользователя
     /// </summary>

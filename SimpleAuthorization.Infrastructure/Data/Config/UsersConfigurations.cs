@@ -18,7 +18,7 @@ internal class UsersConfigurations : IEntityTypeConfiguration<User>
         builder.Property(user => user.UserStatus)
             .HasDefaultValue(UserStatus.Active)
             .HasConversion<string>();
-        
+
         builder.Property(user => user.UserRole)
             .HasDefaultValue(UserRoles.Administartor)
             .HasConversion<string>();

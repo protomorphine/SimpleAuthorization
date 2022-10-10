@@ -11,14 +11,13 @@ using SimpleAuthorization.Infrastructure.Data;
 namespace SimpleAuthorization.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221002101946_AddedUserRole")]
-    partial class AddedUserRole
+    [Migration("20221009192147_Initial")]
+    partial class Initial
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0-rc.1.22426.7");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
 
             modelBuilder.Entity("SimpleAuthorization.Core.Entities.Organization", b =>
                 {
@@ -31,7 +30,8 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_organizations");
 
                     b.ToTable("organizations", (string)null);
                 });
@@ -53,7 +53,7 @@ namespace SimpleAuthorization.Infrastructure.Migrations
 
                     b.Property<long?>("OrganizationId")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("org_id");
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT")
@@ -64,18 +64,20 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("Administartor")
-                        .HasColumnName("role");
+                        .HasColumnName("user_role");
 
                     b.Property<string>("UserStatus")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("Active")
-                        .HasColumnName("status");
+                        .HasColumnName("user_status");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("OrganizationId")
+                        .HasDatabaseName("ix_users_organization_id");
 
                     b.ToTable("users", (string)null);
                 });
@@ -84,7 +86,8 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                 {
                     b.HasOne("SimpleAuthorization.Core.Entities.Organization", "Organization")
                         .WithMany("Users")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .HasConstraintName("fk_users_organizations_organization_id");
 
                     b.Navigation("Organization");
                 });

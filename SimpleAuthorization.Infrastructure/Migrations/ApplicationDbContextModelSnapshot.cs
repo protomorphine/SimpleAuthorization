@@ -15,7 +15,7 @@ namespace SimpleAuthorization.Infrastructure.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0-rc.1.22426.7");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.9");
 
             modelBuilder.Entity("SimpleAuthorization.Core.Entities.Organization", b =>
                 {
@@ -24,11 +24,20 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
+                    b.Property<long>("HeadOfOrgUserId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("head_of_org_user_id");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_organizations");
+
+                    b.HasIndex("HeadOfOrgUserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_organizations_head_of_org_user_id");
 
                     b.ToTable("organizations", (string)null);
                 });
@@ -50,7 +59,7 @@ namespace SimpleAuthorization.Infrastructure.Migrations
 
                     b.Property<long?>("OrganizationId")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("org_id");
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("TEXT")
@@ -61,27 +70,42 @@ namespace SimpleAuthorization.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("Administartor")
-                        .HasColumnName("role");
+                        .HasColumnName("user_role");
 
                     b.Property<string>("UserStatus")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValue("Active")
-                        .HasColumnName("status");
+                        .HasColumnName("user_status");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
-                    b.HasIndex("OrganizationId");
+                    b.HasIndex("OrganizationId")
+                        .HasDatabaseName("ix_users_organization_id");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleAuthorization.Core.Entities.Organization", b =>
+                {
+                    b.HasOne("SimpleAuthorization.Core.Entities.User", "HeadOfOrgUser")
+                        .WithOne("HeadOf")
+                        .HasForeignKey("SimpleAuthorization.Core.Entities.Organization", "HeadOfOrgUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_organizations_users_head_of_org_user_id1");
+
+                    b.Navigation("HeadOfOrgUser");
                 });
 
             modelBuilder.Entity("SimpleAuthorization.Core.Entities.User", b =>
                 {
                     b.HasOne("SimpleAuthorization.Core.Entities.Organization", "Organization")
                         .WithMany("Users")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .HasConstraintName("fk_users_organizations_organization_id");
 
                     b.Navigation("Organization");
                 });
@@ -89,6 +113,12 @@ namespace SimpleAuthorization.Infrastructure.Migrations
             modelBuilder.Entity("SimpleAuthorization.Core.Entities.Organization", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("SimpleAuthorization.Core.Entities.User", b =>
+                {
+                    b.Navigation("HeadOf")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

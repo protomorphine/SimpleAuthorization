@@ -28,17 +28,18 @@ public class OrganizationService : IOrganizationService
     /// <summary>
     /// Метод создания новой организации
     /// </summary>
-    /// <param name="name">имя организации</param>
+    /// <param name="dto">дто создания организации</param>
     /// <returns><see cref="OrganizationDto"/></returns>
-    public async Task<OrganizationDto> CreateOrganizationAsync(string name)
+    public async Task<OrganizationDto> CreateOrganizationAsync(CreateOrganizationDto dto)
     {
         var createdOrgId = await _organizationRepository.CreateAsync(new Organization()
         {
-            Name = name
+            Name = dto.Name,
+            HeadOfOrgUserId = dto.CreatorId
         });
 
         var createdOrg = await _organizationRepository.GetAsync(createdOrgId);
-        
+
         return createdOrg!.ToOrganizationDto();
     }
 

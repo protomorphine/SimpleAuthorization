@@ -15,15 +15,15 @@ public static class ProblemDetailsExtensions
     /// <param name="options"></param>
     public static void ConfigureProblemDetails(ProblemDetailsOptions options)
     {
-        options.Map<UnauthorizedException>(ex => 
+        options.Map<UnauthorizedException>(ex =>
             new ExtendedExceptionProblemDetails(ex, StatusCodes.Status401Unauthorized));
-        
-        options.Map<ObjectNotFoundException>(ex => 
+
+        options.Map<ObjectNotFoundException>(ex =>
             new ExtendedExceptionProblemDetails(ex, StatusCodes.Status404NotFound));
-        
-        options.Map<UserAlreadyExistException>(ex => 
+
+        options.Map<UserAlreadyExistException>(ex =>
             new ExtendedExceptionProblemDetails(ex, StatusCodes.Status400BadRequest));
-        
+
         options.Map<InvalidOperationException>(ex =>
             new ExtendedExceptionProblemDetails(ex, StatusCodes.Status403Forbidden));
     }

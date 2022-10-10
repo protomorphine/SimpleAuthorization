@@ -14,5 +14,9 @@ public class OrganizationsConfigurations : IEntityTypeConfiguration<Organization
         builder.ToTable("organizations");
 
         builder.HasKey(it => it.Id);
+
+        builder.HasOne(org => org.HeadOfOrgUser)
+            .WithOne(user => user.HeadOf)
+            .HasForeignKey<Organization>(org => org.HeadOfOrgUserId);
     }
 }

@@ -10,9 +10,9 @@ public interface IOrganizationService
     /// <summary>
     /// Метод создания новой организации
     /// </summary>
-    /// <param name="name">имя организации</param>
+    /// <param name="dto">дто создания организации</param>
     /// <returns><see cref="OrganizationDto"/></returns>
-    Task<OrganizationDto> CreateOrganizationAsync(string name);
+    Task<OrganizationDto> CreateOrganizationAsync(CreateOrganizationDto dto);
 
     /// <summary>
     /// Метод получения организации по id

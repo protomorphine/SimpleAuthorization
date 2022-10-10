@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using SimpleAuthorization.Core.Dtos;
+﻿using SimpleAuthorization.Core.Dtos;
 
 namespace SimpleAuthorization.Core.Entities;
 
@@ -11,19 +10,27 @@ public class Organization : IEntity<long>
     /// <summary>
     /// ID организации
     /// </summary>
-    [Column("id")]
     public long Id { get; set; }
 
     /// <summary>
     /// Имя организации
     /// </summary>
-    [Column("name")]
     public string? Name { get; set; }
 
     /// <summary>
-    /// Связь сущностей организаця - пользователь
+    /// Идентификатор создателя организации
+    /// </summary>
+    public long HeadOfOrgUserId { get; set; }
+
+    /// <summary>
+    /// Связь сущностей организаця - пользователь (many to one)
     /// </summary>
     public virtual List<User>? Users { get; set; }
+
+    /// <summary>
+    /// Связь сущностей организация - пользователь (one to one)
+    /// </summary>
+    public virtual User HeadOfOrgUser { get; set; }
 
     /// <summary>
     /// Метод мапинга сущности на дто
