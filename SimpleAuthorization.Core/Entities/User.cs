@@ -43,6 +43,11 @@ public class User : IEntity<long>
     /// Роль пользователя
     /// </summary>
     public UserRoles UserRole { get; set; }
+    
+    /// <summary>
+    /// Рейтинг пользователя
+    /// </summary>
+    public float Rating { get; set; }
 
     /// <summary>
     /// Связь сущностей пользователь - организация
