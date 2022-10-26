@@ -48,6 +48,11 @@ public class User : IEntity<long>
     /// Рейтинг пользователя
     /// </summary>
     public float Rating { get; set; }
+    
+    /// <summary>
+    /// Зарплата пользователя
+    /// </summary>
+    public decimal Salary { get; set; }
 
     /// <summary>
     /// Связь сущностей пользователь - организация
