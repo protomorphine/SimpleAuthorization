@@ -53,6 +53,11 @@ public class User : IEntity<long>
     /// Зарплата пользователя
     /// </summary>
     public decimal Salary { get; set; }
+    
+    /// <summary>
+    /// Должность пользователя
+    /// </summary>
+    public UserPosition Position { get; set; }
 
     /// <summary>
     /// Связь сущностей пользователь - организация
